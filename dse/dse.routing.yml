@@ -1,0 +1,26 @@
+dse.news:
+  path: 'dse/get-news'
+  defaults:
+    _controller: 'Drupal\dse\Controller\APIController::getNews'
+    _title: 'DSE NEWS'
+  requirements:
+    _permission: 'access content'
+
+
+dse.settings:
+  path: 'admin/dse/settings'
+  defaults:
+    _form: '\Drupal\dse\Form\SettingsForm'
+    _title: 'DSE Settings'
+  requirements:
+    _permission: 'administer site configuration'
+
+dse.autocomplete:
+  path: 'dse/autocomplete'
+  defaults:
+    _controller: 'Drupal\dse\Controller\AutocompleteController:handleAutocomplete'
+    _title: 'DSE Autocomplete'
+  requirements: 
+    _permission: 'access content'
+
+

@@ -1,0 +1,53 @@
+<?php
+use Drupal\Core\Database\Database;
+
+/**
+ * Implements hook_schema().
+ */
+
+ function dse_schema() {
+  $schema['dse_vocables'] = [
+    'description' => 'Stores the vocables for the DSE module.',
+    'fields' => [
+      'title' => [
+        'description' => 'The vocable.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ],
+      'url' => [
+        'description' => 'The URL for the entry on the vocable.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ],
+      'changed_time' => [
+        'description' => 'A timestamp indicating when the vocable was last changed.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'full_name' => [
+        'description' => 'The full name of the resource',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE, 
+      ],
+    ],
+    'indexes' => [
+      'indexing' => ['title'],
+    ],
+    'primary key' => ['url'],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function dse_uninstall() {
+  \Drupal::configFactory()->getEditable('dse_api.settings') ->delete();
+
+  \Drupal::database() -> schema() -> dropTable('dse_vocables');
+}  

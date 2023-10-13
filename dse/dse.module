@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * Implements hook_theme().
+ */
+function dse_theme($existing, $type, $theme, $path) {
+    return [
+      'autocomplete' => [
+        'variables' => [
+          'search_form' => NULL],
+      ],
+      'search_output' => [
+        'variables' => [
+          'response_array' => NULL,
+          'nothing_found' => NULL,
+        ]
+      ]
+    ];
+  }
+
+/**
+ * Implements hook_form_alter().
+ */
+
+function dse_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'dse_api_settings') {
+    $form['actions']['submit']['#type'] = 'hidden';
+  }
+}
