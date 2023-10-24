@@ -65,13 +65,14 @@ class SearchForm extends FormBase {
 
             $response = $conn 
             -> select('dse_vocables', 'v') 
-            -> fields('v', ['full_name', 'title', 'url'])
+            -> fields('v', ['full_name', 'title', 'format_title', 'url'])
             -> condition('v.full_name', $source, '=')
             -> condition('v.title', $value . '%', 'LIKE')
+            -> orderBy('v.format_title', 'ASC')
             -> execute()
             -> fetchAll();
 
-            if ($response) {
+            if ($response) { 
                 $response_array[$source] = $response;
             }
 

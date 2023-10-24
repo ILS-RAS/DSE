@@ -166,7 +166,8 @@ class SettingsForm extends ConfigFormBase {
               'title' => $vocable['title'],
               'full_name' => $url['full_name'],
               'url' => $vocable['view_node'],
-              'changed_time' => $vocable['changed']
+              'changed_time' => $vocable['changed'],
+              'format_title' => $vocable['format_title']
             ])
             -> execute();
           }

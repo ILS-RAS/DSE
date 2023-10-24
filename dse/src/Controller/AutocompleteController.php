@@ -25,9 +25,10 @@ class AutocompleteController extends ControllerBase {
             if ($sources) {
                 $response = \Drupal::database() 
                 -> select('dse_vocables','v')
-                -> fields('v', ['title', 'url'])
+                -> fields('v', ['title'])
                 -> condition('v.full_name', $sources, 'IN')
                 -> condition('v.title', $input, 'LIKE')
+                -> distinct()
                 -> range(0, 15)
                 -> execute()
                 -> fetchAll();

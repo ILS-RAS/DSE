@@ -8,7 +8,7 @@
                 <p class="card-text">
                     {% for record in objects %}
                         <span class="badge"> 
-                            <a href={{record.url}} target="_blank"> {{record.title}} </a>
+                            <a href={{record.url}} target="_blank"> {{record.format_title|raw}} </a>
                         </span>
                     {% endfor %}
                 </p>

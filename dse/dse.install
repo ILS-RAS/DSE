@@ -33,6 +33,12 @@ use Drupal\Core\Database\Database;
         'length' => 255,
         'not null' => TRUE, 
       ],
+      'format_title' => [
+        'description' => 'Formatted title of an entry',
+        'type' => 'varchar',
+        'length' => 5000,
+        'not null' => TRUE,
+      ]
     ],
     'indexes' => [
       'indexing' => ['title'],
