@@ -21,10 +21,10 @@ use Drupal\Core\Database\Database;
         'length' => 255,
         'not null' => TRUE,
       ],
-      'changed_time' => [
-        'description' => 'A timestamp indicating when the vocable was last changed.',
-        'type' => 'int',
-        'unsigned' => TRUE,
+      'created_time' => [
+        'description' => 'A timestamp indicating when the vocable was created.',
+        'type' => 'varchar',
+        'length' => 255,
         'not null' => TRUE,
       ],
       'full_name' => [

@@ -12,12 +12,12 @@ dse_api.settings:
             url_string:
               type: string
               label: 'URL'
+            initialized:
+              type: boolean
+              label: 'Initialized'
             enabled:
               type: boolean
               label: 'Enabled'
             full_name:
               type: string
               label: 'Full name for resource'
-            changed_time:
-              type: int
-              label: 'Last change time'

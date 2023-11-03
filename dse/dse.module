@@ -1,5 +1,6 @@
 <?php
 
+use Drupal\Component\Serialization\Json;
 /**
  * Implements hook_theme().
  */
@@ -25,5 +26,68 @@ function dse_theme($existing, $type, $theme, $path) {
 function dse_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'dse_api_settings') {
     $form['actions']['submit']['#type'] = 'hidden';
+
+    if ($form['config_urls']) {
+      $keys = array_keys($form['config_urls']);
+      foreach ($keys as $key) {
+        if (strval($key)[0] != '#') {
+          $is_init = \Drupal::config('dse_api.settings') -> get('url_list')[$key]['initialized'];
+          if ($is_init) {
+            $form['config_urls'][$key]['synchronize']['#disabled'] = true;
+            $form['config_urls'][$key]['synchronize']['#value'] = 'Инициализировано!';
+          }
+        }
+      }
+    }
   }
 }
+
+
+
+/**
+ * Implements hook_cron().
+ */
+
+ function dse_cron() {
+  $url_list = \Drupal::config('dse_api.settings') -> get('url_list');
+  $conn = \Drupal::database();
+
+  if ($url_list) {
+    foreach ($url_list as $url) {
+      $link = $url['url_string'];
+      $full_name = $url['full_name'];
+
+
+      $query = $conn 
+      -> select('dse_vocables', 'v')
+      -> fields('v', ['created_time'])
+      -> condition('v.full_name', $full_name)
+      -> orderBy('v.created_time', 'DESC')
+      -> range(0, 1)
+      -> execute()
+      -> fetchAll();
+
+      if ($query) {
+        $last_time = $query[0] -> created_time;
+    
+        $link .= '?created=' . $last_time;
+        $request = \Drupal::httpClient() -> get($link);
+        $response = json::decode($request->getBody()->getContents());
+
+        if ($response) {
+          foreach ($response as &$vocable) {
+            $query = $conn -> insert('dse_vocables') 
+            -> fields([
+              'title' => $vocable['title'],
+              'full_name' => $full_name,
+              'url' => $vocable['view_node'],
+              'created_time' => explode('+', $vocable['created'])[0],
+              'format_title' => $vocable['format_title']
+            ])
+            -> execute();
+          }
+        }
+      }
+    }
+  }
+ }

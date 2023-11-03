@@ -81,7 +81,7 @@ class SettingsForm extends ConfigFormBase {
 
           $form['config_urls'][$i]['full_name'] = array(
             '#type' => 'item',
-            '#title' => $urls[$i]['full_name']
+            '#title' => $urls[$i]['full_name'],
           );
 
           $form['config_urls'][$i]['enable'] = array(
@@ -91,7 +91,7 @@ class SettingsForm extends ConfigFormBase {
 
           $form['config_urls'][$i]['synchronize'] = array(
             '#type' => 'submit',
-            '#value' => $this -> t('Синхронизировать'),
+            '#value' => $this -> t('Инициализировать'),
             '#name' => 'synchronization_'. $i,
             '#submit' => ['::synchronizeDB'],
             '#limit_validation_errors' => [],
@@ -140,7 +140,8 @@ class SettingsForm extends ConfigFormBase {
         $urls[] = ['url_string' => $form_state -> getValues()['add_link']['link'],
         'enabled'=> false, 
         'full_name' => $form_state -> getValues()['add_link']['full_name'],
-        'changed_time' => 0];
+        'initialized' => false
+      ];
 
          $this->configFactory->getEditable('dse_api.settings')
         ->set('url_list', $urls) ->save();
@@ -158,7 +159,6 @@ class SettingsForm extends ConfigFormBase {
         $request = $client -> get($url['url_string']);
         $response = json::decode($request->getBody()->getContents());
 
-
         try {
           foreach ($response as &$vocable) {
             $query = $conn -> insert('dse_vocables') 
@@ -166,12 +166,16 @@ class SettingsForm extends ConfigFormBase {
               'title' => $vocable['title'],
               'full_name' => $url['full_name'],
               'url' => $vocable['view_node'],
-              'changed_time' => $vocable['changed'],
+              'created_time' => explode('+', $vocable['created'])[0],
               'format_title' => $vocable['format_title']
             ])
             -> execute();
           }
-          $this->messenger()->addMessage('Данные синхронизированы!');
+      
+          $url['initialized'] = true;
+          $this -> configFactory -> getEditable('dse_api.settings') -> set('url_list.' . $index, $url) -> save();
+
+          $this->messenger()->addMessage('Данные синхронизированы! Дальше база данных будет обновляться автоматически.');
         } catch(Exception $e) {
           $this->messenger()->addMessage('Что-то пошло не так. Попытайтесь очистить базу данных и повторите попытку.');
         }
