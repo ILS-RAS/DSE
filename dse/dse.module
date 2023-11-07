@@ -33,8 +33,8 @@ function dse_form_alter(&$form, &$form_state, $form_id) {
         if (strval($key)[0] != '#') {
           $is_init = \Drupal::config('dse_api.settings') -> get('url_list')[$key]['initialized'];
           if ($is_init) {
-            $form['config_urls'][$key]['synchronize']['#disabled'] = true;
-            $form['config_urls'][$key]['synchronize']['#value'] = 'Инициализировано!';
+            $form['config_urls'][$key]['synchronize']['#type'] = 'item';
+            $form['config_urls'][$key]['synchronize']['#title'] = 'Инициализировано!';
           }
         }
       }

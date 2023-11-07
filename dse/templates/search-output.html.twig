@@ -1,18 +1,21 @@
-{% if nothing_found %}
-    <h5> По этому запросу ничего не найдено! </h5>
-{% else %}
-    {% for name, objects in response_array %}
-        <div class="card">
-            <div class="card-body">
-                <h6 class="card-title"> {{name}}:</h6>
-                <p class="card-text">
+{{ attach_library('dse/search_form') }}
+
+<div>
+    {% if nothing_found %}
+        <font size="+0.5"> По этому запросу ничего не найдено! </font>
+    {% else %}
+        <div {{ attributes.addClass('output')}}>
+        {% for name, objects in response_array %}
+            <br>
+            <div>
+                <font size="+0.5"> <b> {{name}}: </b> </font>
                     {% for record in objects %}
-                        <span class="badge"> 
+                        <br> <span class="badge"> 
                             <a href={{record.url}} target="_blank"> {{record.format_title|raw}} </a>
                         </span>
                     {% endfor %}
-                </p>
             </div>
+        {% endfor %}
         </div>
-    {% endfor %}
-{% endif %}
+    {% endif %}
+</div>

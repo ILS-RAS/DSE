@@ -1,0 +1,5 @@
+search_form:
+  version: 1.x
+  css:
+    base:
+      css/search_form.css: {}

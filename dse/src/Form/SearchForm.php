@@ -12,11 +12,35 @@ class SearchForm extends FormBase {
     }
 
     public function buildForm (array $form, FormStateInterface $form_state) {
-        
 
-        $form['search'] = array(
+        $form['search_block'] = array(
+            '#type' => 'container',
+            '#attributes' => [
+                'class' => [
+                    'container-inline',
+                    'd-inline-flex'
+                ]
+            ],
+        );
+        
+        $form['search_block']['search'] = array(
             '#type' => 'textfield',
             '#autocomplete_route_name' => 'dse.autocomplete',
+        );
+
+        $form['search_block']['submit'] = array(
+            '#type' => 'button',
+            '#value' => 'Submit',
+            '#ajax' => array(
+                'event' => 'click',
+                'callback' => '::showResults',
+                'wrapper' => 'output',
+                'method' => 'replaceWith',
+                'progress' => array(
+                    'type' => 'throbber',
+                    'message' => NULL
+                )
+            )
         );
 
         $form['output'] = array(
@@ -30,17 +54,6 @@ class SearchForm extends FormBase {
         );
 
 
-        $form['submit'] = array(
-            '#type' => 'button',
-            '#value' => 'Submit',
-            '#ajax' => array(
-                'event' => 'click',
-                'callback' => '::showResults',
-                'wrapper' => 'output',
-                'method' => 'replaceWith'
-            )
-        );
-
         return $form;
     }
 
@@ -51,6 +64,7 @@ class SearchForm extends FormBase {
     public function showResults(array &$form, FormStateInterface $form_state) {
         $value = $form_state -> getValue('search');
 
+        if ($value) {
         $config = $this -> config('dse_api.settings') -> get('url_list');
         $sources = [];
         foreach ($config as $url) {
@@ -74,8 +88,8 @@ class SearchForm extends FormBase {
 
             if ($response) { 
                 $response_array[$source] = $response;
+                }
             }
-
         }
 
         if ($response_array) {

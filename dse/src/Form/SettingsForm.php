@@ -67,6 +67,7 @@ class SettingsForm extends ConfigFormBase {
           '#type' => 'table',
           '#tree' => TRUE,
           '#header' => array(
+            $this -> t('Название'),
             $this -> t('URL'),
             $this -> t('Активно'),
             [
@@ -82,6 +83,11 @@ class SettingsForm extends ConfigFormBase {
           $form['config_urls'][$i]['full_name'] = array(
             '#type' => 'item',
             '#title' => $urls[$i]['full_name'],
+          );
+
+          $form['config_urls'][$i]['url'] = array(
+            '#type' => 'item',
+            '#title' => $urls[$i]['url_string'],
           );
 
           $form['config_urls'][$i]['enable'] = array(
