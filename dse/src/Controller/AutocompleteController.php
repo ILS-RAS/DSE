@@ -13,7 +13,7 @@ class AutocompleteController extends ControllerBase {
         $sources = [];
         foreach ($config as $url) {
             if ($url['enabled'] = true) {
-                $sources[] = $url['full_name'];
+                $sources[] = $url['id'];
             }
         }
 
@@ -26,7 +26,7 @@ class AutocompleteController extends ControllerBase {
                 $response = \Drupal::database() 
                 -> select('dse_vocables','v')
                 -> fields('v', ['title'])
-                -> condition('v.full_name', $sources, 'IN')
+                -> condition('v.source_id', $sources, 'IN')
                 -> condition('v.title', $input, 'LIKE')
                 -> distinct()
                 -> range(0, 15)

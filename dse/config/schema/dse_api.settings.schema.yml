@@ -9,6 +9,9 @@ dse_api.settings:
           type: mapping
           label: 'URL + enabled'
           mapping:
+            id:
+              type: string
+              label: 'ID'
             url_string:
               type: string
               label: 'URL'

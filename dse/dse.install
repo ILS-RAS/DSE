@@ -38,6 +38,12 @@ use Drupal\Core\Database\Database;
         'type' => 'varchar',
         'length' => 5000,
         'not null' => TRUE,
+      ],
+      'source_id' => [
+        'description' => 'Source ID',
+        'type' => 'varchar',
+        'length' => 13,
+        'not null' => TRUE,
       ]
     ],
     'indexes' => [

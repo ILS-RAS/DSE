@@ -146,7 +146,8 @@ class SettingsForm extends ConfigFormBase {
         $urls[] = ['url_string' => $form_state -> getValues()['add_link']['link'],
         'enabled'=> false, 
         'full_name' => $form_state -> getValues()['add_link']['full_name'],
-        'initialized' => false
+        'initialized' => false,
+        'id' => uniqid()
       ];
 
          $this->configFactory->getEditable('dse_api.settings')
@@ -173,7 +174,8 @@ class SettingsForm extends ConfigFormBase {
               'full_name' => $url['full_name'],
               'url' => $vocable['view_node'],
               'created_time' => explode('+', $vocable['created'])[0],
-              'format_title' => $vocable['format_title']
+              'format_title' => $vocable['format_title'],
+              'source_id' => $url['id'],
             ])
             -> execute();
           }
@@ -209,10 +211,10 @@ class SettingsForm extends ConfigFormBase {
         $urls = $this -> config('dse_api.settings') -> get('url_list');
         $index = explode('_', $form_state -> getTriggeringElement()['#name'])[1];
 
-        $alias = $urls[$index]['full_name'];
+        $id = $urls[$index]['id'];
 
         $conn = \Drupal::database();
-        $query = $conn -> delete('dse_vocables') -> condition('full_name', $alias) -> execute();
+        $query = $conn -> delete('dse_vocables') -> condition('source_id', $id) -> execute();
 
         unset($urls[$index]);
         $urls = array_values($urls);

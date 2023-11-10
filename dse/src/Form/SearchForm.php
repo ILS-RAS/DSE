@@ -69,7 +69,7 @@ class SearchForm extends FormBase {
         $sources = [];
         foreach ($config as $url) {
             if ($url['enabled'] = true) {
-                $sources[] = $url['full_name'];
+                $sources[] = ["id" => $url['id'], 'full_name' => $url['full_name']];
             }
         }
         $conn = \Drupal::database();
@@ -80,14 +80,14 @@ class SearchForm extends FormBase {
             $response = $conn 
             -> select('dse_vocables', 'v') 
             -> fields('v', ['full_name', 'title', 'format_title', 'url'])
-            -> condition('v.full_name', $source, '=')
+            -> condition('v.source_id', $source['id'])
             -> condition('v.title', $value . '%', 'LIKE')
             -> orderBy('v.format_title', 'ASC')
             -> execute()
             -> fetchAll();
 
             if ($response) { 
-                $response_array[$source] = $response;
+                $response_array[$source['id']] = ['response' => $response, 'source' => $source['full_name']];
                 }
             }
         }
