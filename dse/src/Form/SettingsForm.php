@@ -97,7 +97,7 @@ class SettingsForm extends ConfigFormBase {
 
           $form['config_urls'][$i]['synchronize'] = array(
             '#type' => 'submit',
-            '#value' => $this -> t('Инициализировать'),
+            '#value' => $this -> t('Синхронизация'),
             '#name' => 'synchronization_'. $i,
             '#submit' => ['::synchronizeDB'],
             '#limit_validation_errors' => [],

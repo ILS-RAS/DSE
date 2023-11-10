@@ -30,7 +30,7 @@ class SearchForm extends FormBase {
 
         $form['search_block']['submit'] = array(
             '#type' => 'button',
-            '#value' => 'Submit',
+            '#value' => 'Поиск',
             '#ajax' => array(
                 'event' => 'click',
                 'callback' => '::showResults',

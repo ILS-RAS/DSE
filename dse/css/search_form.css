@@ -1,4 +1,6 @@
 .output {
-    height:350px;
+    max-height: 150px;
     overflow-y: auto;
+    overflow-x: hidden;
+    z-index: inherit 1;
 }

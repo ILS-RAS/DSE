@@ -31,10 +31,16 @@ function dse_form_alter(&$form, &$form_state, $form_id) {
       $keys = array_keys($form['config_urls']);
       foreach ($keys as $key) {
         if (strval($key)[0] != '#') {
-          $is_init = \Drupal::config('dse_api.settings') -> get('url_list')[$key]['initialized'];
-          if ($is_init) {
+          $config = \Drupal::config('dse_api.settings') -> get('url_list')[$key];
+          if ($config['initialized']) {
+            $name = $config['full_name'];
+            $count = \Drupal::database() -> select('dse_vocables', 'v')
+            -> condition('v.full_name', $name)
+            -> countQuery()
+            -> execute()
+            -> fetchField();
             $form['config_urls'][$key]['synchronize']['#type'] = 'item';
-            $form['config_urls'][$key]['synchronize']['#title'] = 'Инициализировано!';
+            $form['config_urls'][$key]['synchronize']['#title'] = $count . ' записей';
           }
         }
       }
