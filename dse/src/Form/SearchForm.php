@@ -81,7 +81,7 @@ class SearchForm extends FormBase {
             -> select('dse_vocables', 'v') 
             -> fields('v', ['full_name', 'title', 'format_title', 'url'])
             -> condition('v.source_id', $source['id'])
-            -> condition('v.title', $value . '%', 'LIKE')
+            -> condition('v.title', $value)
             -> orderBy('v.format_title', 'ASC')
             -> execute()
             -> fetchAll();

@@ -5,3 +5,17 @@
 }
 
 
+.lexical-search .accordion-button:not(.collapsed) {
+    background-color: #e8e8e8 ;
+}
+
+.lexical-search .accordion-button.collapsed {
+    background-color: #ece6d6;
+}
+
+.lexical-search .accordion-button:focus {
+    z-index: 4;
+    border-color: #e8e8e8;
+    box-shadow: 2px 2px 4px rgba(232, 232, 232, 0.7);;
+    outline: 0;
+}
