@@ -4,18 +4,13 @@
     overflow-x: hidden;
 }
 
-
-.lexical-search .accordion-button:not(.collapsed) {
-    background-color: #e8e8e8 ;
-}
-
-.lexical-search .accordion-button.collapsed {
+.lexical-search .accordion-button {
     background-color: #ece6d6;
 }
 
-.lexical-search .accordion-button:focus {
+.lexical-search :focus {
     z-index: 4;
-    border-color: #e8e8e8;
-    box-shadow: 2px 2px 4px rgba(232, 232, 232, 0.7);;
+    border-color:#ece6d6;
+    box-shadow: 2px 2px 4px rgba(237, 231, 214, 0.7);;
     outline: 0;
 }
