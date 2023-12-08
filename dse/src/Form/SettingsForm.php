@@ -159,12 +159,20 @@ class SettingsForm extends ConfigFormBase {
       public function synchronizeDB(array &$form, FormStateInterface $form_state) {
         $index = explode('_', $form_state -> getTriggeringElement()['#name'])[1];
         $url = $this -> config('dse_api.settings') -> get('url_list')[$index];
+        $link = $url['url_string'];
 
         $conn = \Drupal::database();
-
         $client = \Drupal::httpClient();
-        $request = $client -> get($url['url_string']);
-        $response = json::decode($request->getBody()->getContents());
+
+        $page = 0;
+
+        while (True) {
+          $request = $client -> get($url['url_string'] . "?page=" . $page);
+          $response = json::decode($request->getBody()->getContents());
+          if (count($response) == 0) {
+            break;
+          }
+          $page += 1;
 
         try {
           foreach ($response as &$vocable) {
@@ -179,19 +187,22 @@ class SettingsForm extends ConfigFormBase {
             ])
             -> execute();
           }
+        } catch(Exception $e) {
+          $this->messenger()->addMessage('Что-то пошло не так. Попытайтесь очистить базу данных и повторите попытку.');
+          parent::submitForm($form, $form_state);
+        }
+      }
       
           $url['initialized'] = true;
           $this -> configFactory -> getEditable('dse_api.settings') -> set('url_list.' . $index, $url) -> save();
 
           $this->messenger()->addMessage('Данные синхронизированы! Дальше база данных будет обновляться автоматически.');
-        } catch(Exception $e) {
-          $this->messenger()->addMessage('Что-то пошло не так. Попытайтесь очистить базу данных и повторите попытку.');
-        }
-
+          parent::submitForm($form, $form_state);
+          
+        } 
         
-        parent::submitForm($form, $form_state);
 
-      }
+
       public function saveConfig(array &$form, FormStateInterface $form_state) {
         $config = $this -> config('dse_api.settings');
         $urls = $config -> get('url_list');
