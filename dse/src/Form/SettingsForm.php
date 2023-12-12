@@ -178,7 +178,7 @@ class SettingsForm extends ConfigFormBase {
           foreach ($response as &$vocable) {
             $query = $conn -> insert('dse_vocables') 
             -> fields([
-              'title' => $vocable['title'],
+              'title' => str_replace('́', '', $vocable['title']),
               'full_name' => $url['full_name'],
               'url' => $vocable['view_node'],
               'created_time' => explode('+', $vocable['created'])[0],
