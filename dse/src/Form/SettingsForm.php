@@ -114,14 +114,14 @@ class SettingsForm extends ConfigFormBase {
       }
 
       $form['save_config'] = array(
-        '#type' => 'submit',
+        '#type' => 'hidden',
         '#value' => 'Сохранить настройки',
         '#submit' => ['::saveConfig'],
         '#limit_validation_errors' => [['config_urls']],
       );
 
       $form['reset_config'] = array(
-        '#type' => 'submit',
+        '#type' => 'hidden',
         '#value' => 'Удалить все данные',
         '#limit_validation_errors' => [],
         '#submit' => ['::resetConfig']
