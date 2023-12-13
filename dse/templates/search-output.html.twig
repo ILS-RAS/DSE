@@ -21,9 +21,9 @@
                             <div id={{"collapse#{id}"}} class="accordion-collapse collapse show" aria-labelledby={{"heading#{id}"}}>
                                 <div class="accordion-body output">
                                     {% for record in objects.response %}                                    
-                                        <div class="badge"> 
+                                        <span class="dse-found-item"> 
                                             <a href={{record.url}} target="_blank"> {{record.format_title|raw}} </a>
-                                        </div>
+                                        </span>
                                     {% endfor %}
                                 </div>
                             </div>
