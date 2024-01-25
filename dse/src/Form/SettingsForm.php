@@ -143,7 +143,11 @@ class SettingsForm extends ConfigFormBase {
         $config = $this->config('dse_api.settings');
         $urls = $config->get('url_list');
 
-        $urls[] = ['url_string' => $form_state -> getValues()['add_link']['link'],
+        $url_string = $form_state -> getValues()['add_link']['link'];
+        $url_string = str_contains($url_string, '?') ? $url_string . '&' : $url_string . '?';
+        
+
+        $urls[] = ['url_string' => $url_string, 
         'enabled'=> false, 
         'full_name' => $form_state -> getValues()['add_link']['full_name'],
         'initialized' => false,
@@ -156,6 +160,7 @@ class SettingsForm extends ConfigFormBase {
         parent::submitForm($form, $form_state);
       }
 
+
       public function synchronizeDB(array &$form, FormStateInterface $form_state) {
         $index = explode('_', $form_state -> getTriggeringElement()['#name'])[1];
         $url = $this -> config('dse_api.settings') -> get('url_list')[$index];
@@ -166,13 +171,17 @@ class SettingsForm extends ConfigFormBase {
 
         $page = 0;
 
-        while (True) {
-          $request = $client -> get($url['url_string'] . "?page=" . $page);
-          $response = json::decode($request->getBody()->getContents());
-          if (count($response) == 0) {
+        while (True) {        
+          try {
+            $request = $client -> get($url['url_string'] . "page=" . $page);
+            $response = json::decode($request->getBody()->getContents());
+            if (count($response) == 0) {
+              break;
+            }
+            $page += 1;
+          } catch (Exception $e) {
             break;
-          }
-          $page += 1;
+          } 
 
         try {
           foreach ($response as &$vocable) {

@@ -80,7 +80,7 @@ function dse_form_alter(&$form, &$form_state, $form_id) {
       if ($query) {
         $last_time = $query[0] -> created_time;
     
-        $link .= '?created=' . $last_time;
+        $link .= 'created=' . $last_time;
         $request = \Drupal::httpClient() -> get($link);
         $response = json::decode($request->getBody()->getContents());
 
