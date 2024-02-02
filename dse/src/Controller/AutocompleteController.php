@@ -21,7 +21,7 @@ class AutocompleteController extends ControllerBase {
         $input = $request -> query -> get('q');
         $input = $input . '%';
 
-        if (strlen($input) >= 4 ) {
+        if (strlen($input) >= 1 ) {
             if ($sources) {
                 $response = \Drupal::database() 
                 -> select('dse_vocables','v')
@@ -29,7 +29,7 @@ class AutocompleteController extends ControllerBase {
                 -> condition('v.source_id', $sources, 'IN')
                 -> condition('v.title', $input, 'LIKE')
                 -> distinct()
-                -> range(0, 15)
+                -> range(0, 30)
                 -> execute()
                 -> fetchAll();
 
