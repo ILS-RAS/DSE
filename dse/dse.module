@@ -88,7 +88,7 @@ function dse_form_alter(&$form, &$form_state, $form_id) {
           foreach ($response as &$vocable) {
             $query = $conn -> insert('dse_vocables') 
             -> fields([
-              'title' => $vocable['title'],
+              'title' => str_replace('́', '', $vocable['title']),
               'full_name' => $full_name,
               'url' => $vocable['view_node'],
               'created_time' => explode('+', $vocable['created'])[0],
