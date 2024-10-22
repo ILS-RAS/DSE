@@ -1,0 +1,6 @@
+dse.settings:
+  title: 'DSE Settings'
+  description: 'Settings for managing what content is included in the search engine'
+  parent: system.admin
+  route_name: dse.settings
+  weight: 100

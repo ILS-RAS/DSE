@@ -1,0 +1,104 @@
+<?php
+
+use Drupal\Component\Serialization\Json;
+/**
+ * Implements hook_theme().
+ */
+function dse_theme($existing, $type, $theme, $path) {
+    return [
+      'autocomplete' => [
+        'variables' => [
+          'search_form' => NULL],
+      ],
+      'search_output' => [
+        'variables' => [
+          'response_array' => NULL,
+          'nothing_found' => NULL,
+        ]
+      ]
+    ];
+  }
+
+/**
+ * Implements hook_form_alter().
+ */
+
+function dse_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'dse_api_settings') {
+    $form['actions']['submit']['#type'] = 'hidden';
+    $all_config = \Drupal::config('dse_api.settings') -> get('url_list');
+    if ($all_config) {
+      $form['save_config']["#type"] = 'submit';
+      $form['reset_config']["#type"] = 'submit';
+      
+      $keys = array_keys($form['config_urls']);
+      foreach ($keys as $key) {
+        if (strval($key)[0] != '#') {
+          $config = $all_config[$key];
+          if ($config['initialized']) {
+            $name = $config['full_name'];
+            $count = \Drupal::database() -> select('dse_vocables', 'v')
+            -> condition('v.full_name', $name)
+            -> countQuery()
+            -> execute()
+            -> fetchField();
+            $form['config_urls'][$key]['synchronize']['#type'] = 'item';
+            $form['config_urls'][$key]['synchronize']['#title'] = $count . ' записей';
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+/**
+ * Implements hook_cron().
+ */
+
+ function dse_cron() {
+  $url_list = \Drupal::config('dse_api.settings') -> get('url_list');
+  $conn = \Drupal::database();
+
+  if ($url_list) {
+    foreach ($url_list as $url) {
+      $link = $url['url_string'];
+      $full_name = $url['full_name'];
+      $source_id = $url['id'];
+
+
+      $query = $conn 
+      -> select('dse_vocables', 'v')
+      -> fields('v', ['created_time'])
+      -> condition('v.full_name', $full_name)
+      -> orderBy('v.created_time', 'DESC')
+      -> range(0, 1)
+      -> execute()
+      -> fetchAll();
+
+      if ($query) {
+        $last_time = $query[0] -> created_time;
+    
+        $link .= 'created=' . $last_time;
+        $request = \Drupal::httpClient() -> get($link);
+        $response = json::decode($request->getBody()->getContents());
+
+        if ($response) {
+          foreach ($response as &$vocable) {
+            $query = $conn -> insert('dse_vocables') 
+            -> fields([
+              'title' => str_replace('́', '', $vocable['title']),
+              'full_name' => $full_name,
+              'url' => $vocable['view_node'],
+              'created_time' => explode('+', $vocable['created'])[0],
+              'format_title' => $vocable['format_title'],
+              'source_id' => $source_id
+            ])
+            -> execute();
+          }
+        }
+      }
+    }
+  }
+ }

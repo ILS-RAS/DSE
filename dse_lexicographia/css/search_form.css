@@ -1,0 +1,16 @@
+.output {
+    max-height: 150px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.lexical-search :focus {
+    z-index: 4;
+    border-color:#ece6d6;
+    box-shadow: 2px 2px 4px rgba(236, 230, 213, 0.7);;
+    outline: 0;
+}
+
+.accordion-button:not(.collapsed){
+    color: initial !important;
+}
