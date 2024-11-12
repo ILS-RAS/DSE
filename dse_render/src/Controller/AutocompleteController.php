@@ -55,8 +55,8 @@ class AutocompleteController extends ControllerBase {
             }
         } else {
             $results[] = array(
-                'value' => 'Nothing found',
-                'label' => 'Nothing found',
+                'value' => 'Ничего не найдено',
+                'label' => 'Ничего не найдено',
             );
         }
         

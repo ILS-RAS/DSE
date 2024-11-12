@@ -174,7 +174,6 @@ class SettingsForm extends ConfigFormBase {
     }
 
     public function clearData(array &$form, FormStateInterface $form_state) {
-        #TO DO : Add confirmation message
         $conn = \Drupal::database();
 
         $query = $conn -> delete('dse_render_datasources') -> execute();
@@ -182,7 +181,6 @@ class SettingsForm extends ConfigFormBase {
         $this -> messenger() -> addMessage('Данные очищены');
     }
     public function deleteSource(array &$form, FormStateInterface $form_state) {
-        #TO DO : Add confirmation message
         $triggering_elt = $form_state -> getTriggeringElement();
         $_id = $triggering_elt['#array_parents'][1];
         

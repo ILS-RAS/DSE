@@ -18,14 +18,7 @@ use Drupal\Core\Block\BlockBase;
     public function build() {
         $form = \Drupal::formBuilder() -> getForm('Drupal\dse_render\Form\SearchForm');
 
-        // $form['search_block']['search_with_output']['output']['#attached']
-
         return $form;
-        // return array(
-        //     '#theme' => 'autocomplete',
-        //     '#search_facets' => $form['facets'],
-        //     '#search_form' => $form['search_block']
-        // );
     }
 
     public function getCacheMaxAge() {

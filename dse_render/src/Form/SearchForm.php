@@ -186,8 +186,7 @@ class SearchForm extends FormBase {
     }
 
     public function setDatasources(array &$form, FormStateInterface $form_state) {
-        // $stringa = '';
-        
+     
         $session = \Drupal::request() -> getSession();
 
         $triggering_elt = $form_state -> getTriggeringElement();

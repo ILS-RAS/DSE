@@ -25,18 +25,6 @@ function dse_render_theme($existing, $type, $theme, $path) {
 }
 
 /**
- * Implements hook_js_alter().
- */
-
-//  function dse_render_js_alter(&$javascript) {
-//   if (isset($javascript['misc/autocomplete.js'])) {
-//     $path = \Drupal::service('extension.list.module') -> getPath('dse_render');
-//     $javascript['misc/autocomplete.js']['data'] = $path . '/js/autocomplete_override.js'; 
-//   }
-//  }
-
-
-/**
  * Implements hook_form_alter().
  */
 
@@ -68,15 +56,6 @@ function dse_render_form_alter(&$form, &$form_state, $form_id) {
       $form['#attached']['library'][] = 'dse_render/search_block';
     }
   }
-
-/**
- * Implements hook_js_settings_alter().
- */
-
- function dse_render_js_settings_alter(array &$settings, \Drupal\Core\Asset\AttachedAssetsInterface $assets) {
-  
-
- }
 
 /**
  * Implements hook_cron().
