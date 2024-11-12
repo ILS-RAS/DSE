@@ -20,7 +20,13 @@
                                     let result = $(json[0].render).addClass("ajax-render mt-3").addClass(val.style);
 
                                     let baseLink = val.ajax_url.split('api')[0];
-                                    $(result).find('a').attr('href', baseLink + $(result).find('a').attr('href'));
+                                    $(result).find('a').each(function() {
+                                        let relLink = $(this).attr('href');
+
+                                        $(this).attr('href', baseLink + relLink);
+                                    })
+
+
                                     $(result).find('a').attr('target', '_blank');
 
                                     let search_styles = '.ajax-render.' + val.style 
