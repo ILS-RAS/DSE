@@ -1,0 +1,6 @@
+dse_render.settings:
+  title: 'DSE_Render Settings'
+  description: 'Settings for managing what content is included in the search engine'
+  parent: system.admin
+  route_name: dse_render.settings
+  weight: 100

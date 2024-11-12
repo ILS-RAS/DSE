@@ -1,0 +1,17 @@
+dse_render.settings:
+  path: 'admin/dse_render/settings'
+  defaults:
+    _form: Drupal\dse_render\Form\SettingsForm
+    _title: 'DSE Render Settings'
+  requirements:
+    _permission: 'administer site configuration'
+
+dse_render.autocomplete:
+  path: 'dse_render/autocomplete'
+  defaults:
+    _controller: 'Drupal\dse_render\Controller\AutocompleteController:handleAutocomplete'
+    _title: 'DSE Autocomplete'
+  requirements: 
+    _permission: 'access content'
+  options:
+    no_cache: TRUE

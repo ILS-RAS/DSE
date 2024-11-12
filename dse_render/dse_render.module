@@ -1,0 +1,127 @@
+<?php
+
+use Drupal\Component\Serialization\Json;
+use Drupal\Core\Asset\AttachedAssetsInterface;
+use Drupal\Core\Language\LanguageInterface;
+
+/**
+ * Implements hook_theme().
+ */
+function dse_render_theme($existing, $type, $theme, $path) {
+  return [
+    // 'autocomplete' => [
+    //   'variables' => [
+    //     'search_form' => NULL,
+    //     'search_facets' => NULL
+    //   ],
+    // ],
+    'search_output' => [
+      'variables' => [
+        '#response_array' => NULL,
+        '#nothing_found' => NULL
+      ]
+    ]
+  ];
+}
+
+/**
+ * Implements hook_js_alter().
+ */
+
+//  function dse_render_js_alter(&$javascript) {
+//   if (isset($javascript['misc/autocomplete.js'])) {
+//     $path = \Drupal::service('extension.list.module') -> getPath('dse_render');
+//     $javascript['misc/autocomplete.js']['data'] = $path . '/js/autocomplete_override.js'; 
+//   }
+//  }
+
+
+/**
+ * Implements hook_form_alter().
+ */
+
+function dse_render_form_alter(&$form, &$form_state, $form_id) {
+    if ($form_id == 'dse_render_settings') {
+        $form['actions']['submit']['#type'] = 'hidden';
+
+        $conn = \Drupal::database();
+        $query = $conn -> select('dse_render_datasources', 'd') -> condition('initialized', 1) -> fields('d', ['_id']);
+        $datasources = $query -> execute() -> fetchAll(); 
+  
+
+        foreach ($datasources as $source) {
+            $_id = $source -> _id;
+
+            $query = $conn -> select('dse_render_vocables', 'v')
+            -> condition('v.source_id', $_id)
+            -> countQuery();
+            
+            $count = $query -> execute() -> fetchField();
+
+            $form['datasources'][$_id]['initialize']['#type'] = 'item';
+            $form['datasources'][$_id]['initialize']['#title'] = $count . ' записей';
+        }
+    }
+
+    if ($form_id == 'dse_render_search_form') {
+      $form['#attached']['library'][] = 'dse_render/autocomplete_override';
+      $form['#attached']['library'][] = 'dse_render/search_block';
+    }
+  }
+
+/**
+ * Implements hook_js_settings_alter().
+ */
+
+ function dse_render_js_settings_alter(array &$settings, \Drupal\Core\Asset\AttachedAssetsInterface $assets) {
+  
+
+ }
+
+/**
+ * Implements hook_cron().
+ */
+
+  function dse_render_cron() {
+
+    $conn = \Drupal::database();
+
+    $datasources = $conn -> select('dse_render_datasources', 'd') 
+    -> condition('initialized', 1)
+    -> fields('d', ['_id', 'update_view_url'])
+    -> execute()
+    -> fetchAll();
+
+    foreach ($datasources as $source) {
+        $last_vocable = $conn -> select('dse_render_vocables', 'v')
+        -> fields('v', ['created_time'])
+        -> condition('source_id', $source -> _id)
+        -> orderBy('created_time', 'DESC')
+        -> range(0, 1)
+        -> execute()
+        -> fetchAll();
+
+        if ($last_vocable) {
+            $last_time = $last_vocable[0] -> created_time;
+            
+            $link = $source -> update_view_url ;
+            $link .= 'created=' . $last_time;
+            $request = \Drupal::httpClient() -> get($link);
+            $response = json::decode($request->getBody()->getContents());
+            if ($response) {
+                foreach ($response as &$vocable) {
+                    $query = $conn -> insert('dse_render_vocables') 
+                    -> fields([
+                      '_id' => uniqid(),
+                      'source_id' => $source -> _id,
+                      'search_title' => str_replace('́', '', $vocable['title']),
+                      'display_title' => $vocable['format_title'],
+                      'node' => $vocable['view_node'],
+                      'created_time' => explode('+', $vocable['created'])[0]
+                    ])
+                    -> execute();
+                  }
+            }
+        }
+    }
+   }

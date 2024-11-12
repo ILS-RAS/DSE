@@ -1,6 +1,0 @@
-name: Dictionary Search Engine
-type: module
-description: Dictionary Search Engine
-package: ILS_RAS
-version: 0.0.1
-core_version_requirement: ^9 || ^10

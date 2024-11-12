@@ -1,0 +1,124 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+
+function dse_render_schema(): array {
+    $schema['dse_render_vocables'] = [
+        'description' => 'Stores the vocables for the DSE module.',
+        'fields' => [
+            '_id' => [
+                'description' => 'Vocable ID',
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => TRUE
+            ],
+            'source_id' => [
+                'description' => 'Source ID',
+                'type' => 'varchar',
+                'length' => 13,
+                'not null' => TRUE,
+            ],
+            'search_title' => [
+                'description' => 'Vocable',
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => TRUE,
+            ],
+            'display_title' => [
+                'description' => 'Formatted title of the vocable for display',
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => TRUE,
+            ],
+            'node' => [
+                'description' => 'The node ID of the vocable',
+                'type' => 'varchar',
+                'length' => 50,
+                'not null' => TRUE,
+            ],
+            'created_time' => [
+                'description' => 'A timestamp indicating when the vocable was created.',
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => TRUE,
+            ],
+        ],
+        'indexes' => [
+          'indexing' => ['search_title'],
+        ],
+        'primary key' => ['_id'],
+        'foreign keys' => [
+            'FK_source' => [
+                'table' => 'dse_render_datasources',
+                'columns' => [
+                    'source_id' => '_id'
+                ]
+            ]
+        ]
+    ];
+
+    $schema['dse_render_datasources'] = [
+        'description' => 'Stores datasources for the DSE module',
+        'fields' => [
+            '_id' => [
+                'description' => 'Datasource ID',
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => TRUE,
+            ],
+            'full_name' => [
+                'description' => 'Datasource name',
+                'type' => 'varchar',
+                'length' => 1000,
+                'not_null' => TRUE,
+            ],
+            'update_view_url' => [
+                'description' => 'URL for retrieving vocables',
+                'type' => 'varchar',
+                'length' => 255,
+                'not_null' => TRUE,
+            ],
+            'ajax_view_url' => [
+                'description' => 'URL for retrieving rendering data for a vocable',
+                'type' => 'varchar',
+                'length' => 255,
+                'not_null' => TRUE,
+            ],
+            'style' => [
+                'description' => 'Style for rendering data for a vocable',
+                'type' => 'varchar',
+                'length' => 50,
+                'not_null' => TRUE,
+            ],
+            'initialized' => [
+                'description' => 'Whether the source was initialized',
+                'type' => 'int',
+                'size' => 'tiny',
+                'unsigned' => TRUE,
+                'default' => 0,
+            ],
+            'active' => [
+                'description' => 'Whether the source is available for search',
+                'type' => 'int',
+                'size' => 'tiny',
+                'unsigned' => TRUE,
+                'default' => 0,
+            ]
+        ],
+        'primary key' => ['_id']
+    ];
+
+    return $schema;
+}
+
+function dse_render_install() {
+    $conn = \Drupal::database();
+    $query = $conn -> query('ALTER TABLE dse_render_vocables ADD CONSTRAINT FK_source FOREIGN KEY (source_id) REFERENCES dse_render_datasources (_id) ON DELETE CASCADE');
+}
+
+function dse_render_uninstall() {
+    $conn = \Drupal::database();
+    $query = $conn -> query('ALTER TABLE dse_render_vocables DROP FOREIGN KEY FK_source');
+}

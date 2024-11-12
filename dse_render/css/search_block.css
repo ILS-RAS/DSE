@@ -1,0 +1,13 @@
+.dse_main_container {
+    display: flex !important;
+    flex-direction: row;
+    align-items: baseline;
+}
+
+div.js-form-type-textfield {
+    width: 100%
+}
+
+span.badge {
+    color: black !important;
+}

@@ -1,0 +1,10 @@
+dse_render.styles:
+  type: config_object
+  label: 'Available styles'
+  mapping:
+    styles:
+      type: sequence
+      label: 'Available styles'
+      style:
+        type: string
+        label: 'Style'

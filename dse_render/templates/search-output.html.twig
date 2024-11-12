@@ -1,0 +1,41 @@
+{{ attach_library('dse_render/style_responses')}}
+
+<div>
+    {% if nothing_found %}
+        <font size="+0.5"> По этому запросу ничего не найдено! </font>
+    {% else %}
+        {% set id = 0 %}
+        <div class="lexical-search">
+            <div class="accordion mt-3">
+                {% for name, objects in response_array %}
+                    {% set id = id + 1 %}
+                        <div class="accordion-item">
+                            <div class="accordion-header" id={{"heading#{id}"}}>
+                                    <div>
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={{"#collapse#{id}"}} aria-expanded="true" aria-controls={{"collapse#{id}"}}>
+                                            {{objects.source}}
+                                        </button>
+                                    </div>        
+                            </div>
+
+                            <div id={{"collapse#{id}"}} class="accordion-collapse collapse show" aria-labelledby={{"heading#{id}"}}>
+                                <div class="accordion-body output d-flex flex-column">
+                                    {% set style = objects.style %}
+                                        <div class='d-flex'> 
+                                        {% for record in objects.responses %}
+                                            <div>                                   
+                                                <span id={{record._id}} class="dse-found-item btn btn-outline-secondary me-2"> 
+                                                    {{record.display_title|raw}}
+                                                </span>
+                                            </div>
+                                        {% endfor %}
+                                        </div>
+                                    <div class="{{"ajax-render #{style}"}}"></div>
+                                </div>
+                            </div>
+                        </div>
+                {% endfor %}
+            </div>
+        </div>    
+    {% endif %}
+</div>

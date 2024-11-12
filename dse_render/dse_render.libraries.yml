@@ -1,0 +1,32 @@
+search_block:
+  version: 1.x 
+  css: 
+    base: 
+      css/search_block.css: {}
+
+ajax_results:
+  version: 1.x
+  js:
+    js/ajax_results.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/once
+    - core/drupalSettings
+
+
+autocomplete_override:
+  version: 1.x
+  js:
+    js/autocomplete_override.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/once
+
+style_responses:
+  version: 1.x
+  css:
+    theme:
+      css/affixoid.css: {}
+      css/neolex.css: {}

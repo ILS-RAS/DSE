@@ -1,0 +1,76 @@
+div.neolex .card-header {
+    background-color: #537072 !important;
+}
+
+div.neolex .field-flexions {
+    font-size: 80%;
+}
+
+div.neolex .grammar-mark {
+    font-style: italic;
+    font-weight: bold;
+    margin-left: 5px;
+    color: white !important;
+}
+
+div.neolex .expressive-mark, .functional-mark, .stylistic-mark {
+    font-style: italic;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+div.neolex .quote-value {
+    font-style: italic;
+    font-size: 90%;
+}
+
+div.neolex .quote-source-value {
+    font-size: 90%;
+    color: darkgrey;
+}
+
+div.neolex details {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+}
+
+div.neolex details.reference-details>summary {
+    font-variant-caps: all-small-caps;
+    font-weight: 500;
+}
+
+div.neolex li.field-etym-variant:only-child {
+    list-style: none;
+    margin-left: -1em !important;
+}
+
+div.neolex details>p {
+    margin-left: 1rem;
+    margin-right: 0.5rem;
+}
+
+div.neolex p.extraling-reference {
+    margin-top: 0.5rem
+}
+
+div.neolex .card-footer {
+    text-align: right;
+    font-weight: 600;
+    height: 1.8rem !important;
+    padding-top: 1px !important;
+    padding-right: 10px !important;
+    color: #537072 !important;
+}
+
+div.neolex .headword-type-42, .headword-type-506 {
+    letter-spacing: 3px;
+    display: inline-block;
+    font-weight: 100;
+}
+
+div.neolex summary.sub-entry-title {
+    background-color: #537072 !important;
+    opacity: 0.8;
+}
