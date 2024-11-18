@@ -28,19 +28,34 @@ class FacetsForm extends FormBase {
             $active_list = $session -> get('dse_render.active_list');
         }
 
+        // $form['facets'] = array(
+        //     '#type' => 'details',
+        //     '#title' => $this -> t('Доступные источники'),
+        //     '#open' => TRUE,
+        //     '#tree' => TRUE,
+        //     '#prefix' => '<div id="facets" class="me-3 card">',
+        //     '#suffix' => '</div>'
+        // );
+
         $form['facets'] = array(
-            '#type' => 'details',
+            '#type' => 'container',
+            '#prefix' => '<div id="facets" class="me-3 card">',
+            '#suffix' => '</div>',
+        );
+
+        $form['facets']['title'] = array(
+            '#type' => 'item',
             '#title' => $this -> t('Доступные источники'),
-            '#open' => TRUE,
-            '#tree' => TRUE,
-            '#prefix' => '<div id="facets" class="me-3">',
-            '#suffix' => '</div>'
+            '#prefix' => '<div class="card-header text-center fw-bold">',
+            '#suffix' => '</div>',
         );
 
 
         $form['facets']['datasources'] = array(
             '#type' => 'table',
             '#tree' => TRUE,
+            '#prefix' => '<div class="card-body">',
+            '#suffix' => '</div>',
         );
         
         

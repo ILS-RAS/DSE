@@ -13,6 +13,7 @@ ajax_results:
     - core/drupal
     - core/once
     - core/drupalSettings
+  
 
 
 autocomplete_override:
@@ -30,3 +31,8 @@ style_responses:
     theme:
       css/affixoid.css: {}
       css/neolex.css: {}
+      css/bibliolex.css: {}
+      css/xix.css: {}
+      css/xviii.css: {}
+      css/xvi-xvii.css: {}
+      css/ivrr.css: {}

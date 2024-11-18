@@ -168,8 +168,8 @@ class SearchForm extends FormBase {
                 if ($voc_result) {
                     $response_array[$_id] = ['source' => $datasource_name, 'style' => $datasource_style, 'responses' => $voc_result];
                     foreach ($voc_result as $res) {
-                        $js_array[$res -> display_title] = ['source' => $datasource_name, 'style' => $datasource_style, 'ajax_url' => $datasource_ajax, 'node' => $res -> node,
-                            '_id' => $res -> _id];
+                        $js_array[$res -> _id] = ['source' => $datasource_name, 'style' => $datasource_style, 'ajax_url' => $datasource_ajax, 'node' => $res -> node,
+                        ];
                     }
                 }  
             }

@@ -1,0 +1,11 @@
+div.ivrr .vocable {
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 550;
+    font-size: large;
+}
+
+div.ivrr .term-mark, .see-reference-symbol {
+    cursor: help;
+    color: #0071b3 !important;
+}
+
