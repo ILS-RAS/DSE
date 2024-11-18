@@ -31,7 +31,7 @@ class FacetsForm extends FormBase {
 
         $form['facets'] = array(
             '#type' => 'container',
-            '#prefix' => '<div class="mt-3 mb-3 card id="facets">',
+            '#prefix' => '<div id="facets" class="card mt-3 mb-3">',
             '#suffix' => '</div>',
         );
 
