@@ -12,22 +12,22 @@ class SearchForm extends FormBase {
     }
 
     public function buildForm(array $form, FormStateInterface $form_state) {
-        $session = \Drupal::request() -> getSession();
-        $active_list = $session -> get('dse_render.active_list');
+        // $session = \Drupal::request() -> getSession();
+        // $active_list = $session -> get('dse_render.active_list');
 
-        $conn = \Drupal::database();
-        $query = $conn -> select('dse_render_datasources', 'd') -> condition('d.active', 1) -> fields('d', ['full_name', '_id']);
-        $result = $query -> execute() -> fetchAll();
+        // $conn = \Drupal::database();
+        // $query = $conn -> select('dse_render_datasources', 'd') -> condition('d.active', 1) -> fields('d', ['full_name', '_id']);
+        // $result = $query -> execute() -> fetchAll();
         
-        if (!($session -> get('dse_render.active_list')) || count($result) != count($active_list)) {
-            $new_list = [];
+        // if (!($session -> get('dse_render.active_list')) || count($result) != count($active_list)) {
+        //     $new_list = [];
 
-            foreach ($result as $record) {
-                $new_list[$record -> _id] = 1;
-            }
-            $session -> set('dse_render.active_list', $new_list);
-            $active_list = $session -> get('dse_render.active_list');
-        }
+        //     foreach ($result as $record) {
+        //         $new_list[$record -> _id] = 1;
+        //     }
+        //     $session -> set('dse_render.active_list', $new_list);
+        //     $active_list = $session -> get('dse_render.active_list');
+        // }
 
         $form['#attached']['library'][] = 'dse_render/search_block';
 
@@ -40,40 +40,40 @@ class SearchForm extends FormBase {
             ]
         );
 
-        $form['search_block']['facets'] = array(
-            '#type' => 'details',
-            '#title' => $this -> t('Доступные источники'),
-            '#open' => TRUE,
-            '#tree' => TRUE,
-            '#prefix' => '<div class="me-3">',
-            '#suffix' => '</div>'
-        );
+        // $form['search_block']['facets'] = array(
+        //     '#type' => 'details',
+        //     '#title' => $this -> t('Доступные источники'),
+        //     '#open' => TRUE,
+        //     '#tree' => TRUE,
+        //     '#prefix' => '<div class="me-3">',
+        //     '#suffix' => '</div>'
+        // );
 
 
-        $form['search_block']['facets']['datasources'] = array(
-            '#type' => 'table',
-            '#tree' => TRUE,
-        );
+        // $form['search_block']['facets']['datasources'] = array(
+        //     '#type' => 'table',
+        //     '#tree' => TRUE,
+        // );
         
         
-        foreach ($result as $record) {
-            $_id = $record -> _id;
+        // foreach ($result as $record) {
+        //     $_id = $record -> _id;
 
-            $form['search_block']['facets']['datasources'][$_id]['name'] = array(
-                '#type' => 'item',
-                '#title' => $record -> full_name
-            );
+        //     $form['search_block']['facets']['datasources'][$_id]['name'] = array(
+        //         '#type' => 'item',
+        //         '#title' => $record -> full_name
+        //     );
         
-            $form['search_block']['facets']['datasources'][$_id]['enabled'] = array(
-                '#type' => 'checkbox',
-                '#default_value' => $active_list[$_id],
-                '#ajax' => [
-                    'callback' => [$this, 'setDatasources'],
-                    'event' => 'change',
-                    'wrapper' => 'edit-output',
-                ]
-            );
-          }
+        //     $form['search_block']['facets']['datasources'][$_id]['enabled'] = array(
+        //         '#type' => 'checkbox',
+        //         '#default_value' => $active_list[$_id],
+        //         '#ajax' => [
+        //             'callback' => [$this, 'setDatasources'],
+        //             'event' => 'change',
+        //             'wrapper' => 'edit-output',
+        //         ]
+        //     );
+        //   }
 
         $form['search_block']['search_with_output'] = array(
             '#type' => 'container',
@@ -185,27 +185,27 @@ class SearchForm extends FormBase {
         return $form['search_block']['search_with_output']['output'];
     }
 
-    public function setDatasources(array &$form, FormStateInterface $form_state) {
+    // public function setDatasources(array &$form, FormStateInterface $form_state) {
      
-        $session = \Drupal::request() -> getSession();
+    //     $session = \Drupal::request() -> getSession();
 
-        $triggering_elt = $form_state -> getTriggeringElement();
-        $_id = $triggering_elt['#array_parents'][3];
+    //     $triggering_elt = $form_state -> getTriggeringElement();
+    //     $_id = $triggering_elt['#array_parents'][3];
 
-        $enabled = $form_state -> getValues()['facets']['datasources'][$_id]['enabled'];
+    //     $enabled = $form_state -> getValues()['facets']['datasources'][$_id]['enabled'];
 
-        $active_list = $session -> get('dse_render.active_list'); 
+    //     $active_list = $session -> get('dse_render.active_list'); 
 
-        if (!$enabled) {
-            $active_list[$_id] = 0;
-        } else {
-            $active_list[$_id] = 1;
-        }
+    //     if (!$enabled) {
+    //         $active_list[$_id] = 0;
+    //     } else {
+    //         $active_list[$_id] = 1;
+    //     }
 
-        $session -> remove('dse_render.active_list');
-        $session -> set('dse_render.active_list', $active_list);
+    //     $session -> remove('dse_render.active_list');
+    //     $session -> set('dse_render.active_list', $active_list);
         
-        return $form['search_block'];
-    }
+    //     return $form['search_block'];
+    // }
 
 }

@@ -117,7 +117,7 @@ class SettingsForm extends ConfigFormBase {
 
             $form['datasources'][$_id]['initialize'] = array(
                 '#type' => 'button',
-                '#value' => 'Инициализировать',
+                '#default_value' => 'Инициализировать',
                 '#limit_validation_errors' => [],
                 '#ajax' => [
                     'event' => 'click',
@@ -126,14 +126,16 @@ class SettingsForm extends ConfigFormBase {
                         'type' => 'throbber',
                         'message' => $this -> t('Собираем данные...')
                     ]
-                ]
+                    ],
+                '#name' => 'initialize_' . $_id
             );
 
-            $form['datasources'][$record -> _id]['delete'] = array(
+            $form['datasources'][$_id]['delete'] = array(
                 '#type' => 'submit',
-                '#value' => 'Удалить ресурс',
+                '#default_value' => 'Удалить ресурс',
                 '#limit_validation_errors' => [],
-                '#submit' => ['::deleteSource']
+                '#submit' => ['::deleteSource'],
+                '#name' => 'delete_' . $_id
             );
         }
         $form['save_config'] = array(
@@ -189,7 +191,6 @@ class SettingsForm extends ConfigFormBase {
         -> condition('_id', $_id)
         -> execute();
 
-        $this -> messenger() -> addMessage('Источник удалён');
     }
 
     public function initializeSource(array &$form, FormStateInterface $form_state) {
@@ -246,7 +247,9 @@ class SettingsForm extends ConfigFormBase {
         -> execute();
 
         $currentURL = Url::fromRoute('<current>');
-        $ajax_response -> addCommand(new RedirectCommand($currentURL -> toString()));
+        $ajax_response -> addCommand(new MessageCommand($_id, NULL, [
+                        'type' => 'warning',
+                    ]));
         return $ajax_response;
     }
 
