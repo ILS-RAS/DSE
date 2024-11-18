@@ -247,9 +247,7 @@ class SettingsForm extends ConfigFormBase {
         -> execute();
 
         $currentURL = Url::fromRoute('<current>');
-        $ajax_response -> addCommand(new MessageCommand($_id, NULL, [
-                        'type' => 'warning',
-                    ]));
+        $ajax_response -> addCommand(new RedirectCommand($currentURL -> toString()));
         return $ajax_response;
     }
 
