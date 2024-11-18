@@ -28,18 +28,10 @@ class FacetsForm extends FormBase {
             $active_list = $session -> get('dse_render.active_list');
         }
 
-        // $form['facets'] = array(
-        //     '#type' => 'details',
-        //     '#title' => $this -> t('Доступные источники'),
-        //     '#open' => TRUE,
-        //     '#tree' => TRUE,
-        //     '#prefix' => '<div id="facets" class="me-3 card">',
-        //     '#suffix' => '</div>'
-        // );
 
         $form['facets'] = array(
             '#type' => 'container',
-            '#prefix' => '<div id="facets" class="me-3 card">',
+            '#prefix' => '<div class="mt-3 mb-3 card id="facets">',
             '#suffix' => '</div>',
         );
 
@@ -95,8 +87,7 @@ class FacetsForm extends FormBase {
         $triggering_elt = $form_state -> getTriggeringElement();
         $_id = $triggering_elt['#array_parents'][2];
 
-        $enabled = $form_state -> getValues()['facets']['datasources'][$_id]['enabled'];
-
+        $enabled = $form_state -> getValues()['datasources'][$_id]['enabled'];
         $active_list = $session -> get('dse_render.active_list'); 
 
         if (!$enabled) {
@@ -105,7 +96,6 @@ class FacetsForm extends FormBase {
             $active_list[$_id] = 1;
         }
 
-        $session -> remove('dse_render.active_list');
         $session -> set('dse_render.active_list', $active_list);
         
         return $form['facets'];
