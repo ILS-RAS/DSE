@@ -18,3 +18,15 @@ div#edit-facets legend {
 .block-dse-render-facets-block a {
     color: var(--bs-secondary)
 }
+
+.form-type-checkbox {
+    margin-left: 0.25em;
+}
+
+.column-margin {
+    margin-top: -0.6em;
+}
+
+div.ajax-progress-throbber {
+    z-index: 10000;
+}

@@ -54,17 +54,17 @@ class FacetsForm extends FormBase {
                     'class' => [
                         'd-inline-flex',
                         'justify-content-between',
-                        'border-bottom',
-                        'pb-1',
-                        'align-items-center'
+                        'align-items-center',
+                        'column-margin'
                     ]
                 ]
             );
 
             $form['facets']['datasources'][$_id]['name'] = array(
-                '#type' => 'link',
-                '#title' => $record -> full_name,
-                '#url' => Url::fromUri($url, ['attributes' => ['target' => '_blank']])
+                '#type' => 'item',
+                '#theme' => 'search_icon',
+                '#datasource_url' => $url,
+                '#datasource_name' => $record -> full_name,
             );
         
             $form['facets']['datasources'][$_id]['enabled'] = array(
@@ -74,6 +74,10 @@ class FacetsForm extends FormBase {
                     'callback' => [$this, 'setDatasources'],
                     'event' => 'change',
                     'wrapper' => 'facets',
+                    'progress' => [
+                        'type' => 'none'
+                    ],
+                    'disable-refocus' => TRUE,
                 ]
             );
           }

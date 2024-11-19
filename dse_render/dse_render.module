@@ -12,9 +12,14 @@ function dse_render_theme($existing, $type, $theme, $path) {
     'search_facets' => [
       'variables' => [
         'facets' => NULL,
-        'test_var' => NULL,
         ]
       ],
+    'search_icon' => [
+      'variables' => [
+        'datasource_url' => NULL,
+        'datasource_name' => NULL
+      ]
+    ],
     'search_output' => [
       'variables' => [
         '#response_array' => NULL,
