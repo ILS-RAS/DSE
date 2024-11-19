@@ -8,6 +8,17 @@
         
     }
 
+    function convertTags(source, selector) {
+        $(source).find(selector).each(function() {
+            Object.keys(bootstrap4_conversion).forEach((tag) => {
+                if ($(this).attr(tag)) {
+                    let attr_value = $(this).attr(tag);
+                    $(this).removeAttr(tag).attr(bootstrap4_conversion[tag], attr_value);
+                }
+            })
+        })
+    }
+
     Drupal.behaviors.resultsDisplay = {
         attach: (context, settings) => {
             once('resultsDisplay', '.dse-found-item').forEach(function (elt) {
@@ -35,18 +46,11 @@
                                         if (relLink !== undefined && !(relLink.startsWith('http'))) {
                                             $(this).attr('href', baseLink + relLink);
                                             $(result).find('a').attr('target', '_blank');
-                                        }
-
-                                        // TODO: make JQuery replace deprecated attributes in all of the retrieved result, not just <a> tags 
-
-                                        Object.keys(bootstrap4_conversion).forEach((tag) => {
-                                            if ($(this).attr(tag)) {
-                                                let attr_value = $(this).attr(tag);
-                                                $(this).removeAttr(tag).attr(bootstrap4_conversion[tag], attr_value);
-                                            }
-                                        })
-                                        
-                                    })  
+                                        }                                       
+                                    })
+                                    
+                                    convertTags(result, 'a');
+                                    convertTags(result, 'span');
 
                                     let search_styles = '.ajax-render.' + val.style 
                                     $(search_styles).replaceWith(result);

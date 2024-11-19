@@ -24,3 +24,13 @@ div.xix.card .collocation-attributes > .vocable {
     letter-spacing: 3px;
     font-weight: 600;
 }
+
+div.xix.card .collocation-symbol {
+    font-size: initial;
+    cursor: help;
+}
+
+div.xix.card .free-collocation-symbol, .grammar-mark, .dynamic-mark, .language-mark, .stylistic-mark, 
+.semantic-mark, .functional-mark, .frequency-mark, .expressive-mark, .context-mark, .change-mark, .reference-type {
+    cursor: help;
+}
