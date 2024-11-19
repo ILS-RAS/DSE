@@ -18,7 +18,10 @@ use Drupal\Core\Block\BlockBase;
     public function build() {
         $form = \Drupal::formBuilder() -> getForm('Drupal\dse_render\Form\FacetsForm');
 
-        return $form;
+        return array(
+            '#theme' => 'search_facets',
+            '#facets' => $form,
+        );
     }
 
     public function getCacheMaxAge() {

@@ -14,7 +14,11 @@ ajax_results:
     - core/once
     - core/drupalSettings
   
-
+search_facets:
+  version: 1.x
+  css:
+    base:
+      css/facets.css: {}
 
 autocomplete_override:
   version: 1.x

@@ -4,6 +4,7 @@ namespace Drupal\dse_render\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
 
 class FacetsForm extends FormBase {
 
@@ -15,7 +16,7 @@ class FacetsForm extends FormBase {
         $active_list = $session -> get('dse_render.active_list');
 
         $conn = \Drupal::database();
-        $query = $conn -> select('dse_render_datasources', 'd') -> condition('d.active', 1) -> fields('d', ['full_name', '_id']);
+        $query = $conn -> select('dse_render_datasources', 'd') -> condition('d.active', 1) -> fields('d', ['full_name', '_id', 'update_view_url']);
         $result = $query -> execute() -> fetchAll();
 
         if (!($session -> get('dse_render.active_list')) || count($result) != count($active_list)) {
@@ -31,32 +32,39 @@ class FacetsForm extends FormBase {
 
         $form['facets'] = array(
             '#type' => 'container',
-            '#prefix' => '<div id="facets" class="card mt-3 mb-3">',
-            '#suffix' => '</div>',
-        );
-
-        $form['facets']['title'] = array(
-            '#type' => 'item',
-            '#title' => $this -> t('Доступные источники'),
-            '#prefix' => '<div class="card-header text-center fw-bold">',
-            '#suffix' => '</div>',
+            '#prefix' => '<div id=facets>',
+            '#suffix' => '</div>'
         );
 
 
         $form['facets']['datasources'] = array(
-            '#type' => 'table',
+            '#type' => 'fieldset',
             '#tree' => TRUE,
-            '#prefix' => '<div class="card-body">',
-            '#suffix' => '</div>',
         );
         
         
         foreach ($result as $record) {
             $_id = $record -> _id;
+            $url = explode('/api', $record -> update_view_url)[0];
+
+            $form['facets']['datasources'][$_id] = array(
+                '#type' => 'container',
+                '#tree' => TRUE,
+                '#attributes' => [
+                    'class' => [
+                        'd-inline-flex',
+                        'justify-content-between',
+                        'border-bottom',
+                        'pb-1',
+                        'align-items-center'
+                    ]
+                ]
+            );
 
             $form['facets']['datasources'][$_id]['name'] = array(
-                '#type' => 'item',
-                '#title' => $record -> full_name
+                '#type' => 'link',
+                '#title' => $record -> full_name,
+                '#url' => Url::fromUri($url, ['attributes' => ['target' => '_blank']])
             );
         
             $form['facets']['datasources'][$_id]['enabled'] = array(
@@ -81,11 +89,14 @@ class FacetsForm extends FormBase {
     }
 
     public function setDatasources(array &$form, FormStateInterface $form_state) {
-     
+        $stringa = ''; 
+
         $session = \Drupal::request() -> getSession();
 
         $triggering_elt = $form_state -> getTriggeringElement();
         $_id = $triggering_elt['#array_parents'][2];
+
+        $stringa .= $_id;
 
         $enabled = $form_state -> getValues()['datasources'][$_id]['enabled'];
         $active_list = $session -> get('dse_render.active_list'); 

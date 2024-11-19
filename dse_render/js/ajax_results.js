@@ -39,7 +39,7 @@
                                 .done( function( json ) {
                                     let result = $(json[0].render).addClass("ajax-render mt-3").addClass(val.style);
 
-                                    let baseLink = val.ajax_url.split('api')[0];
+                                    let baseLink = val.ajax_url.split('/api')[0];
 
                                     $(result).find('a').each(function() {
                                         let relLink = $(this).attr('href');
