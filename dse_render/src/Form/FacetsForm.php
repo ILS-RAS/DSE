@@ -54,7 +54,7 @@ class FacetsForm extends FormBase {
                     'class' => [
                         'd-inline-flex',
                         'justify-content-between',
-                        'align-items-center',
+                        'align-items-baseline',
                         'column-margin'
                     ]
                 ]

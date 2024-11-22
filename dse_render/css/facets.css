@@ -15,12 +15,8 @@ div#edit-facets legend {
     margin: -1em;
 }
 
-.block-dse-render-facets-block a {
-    color: var(--bs-secondary)
-}
-
 .form-type-checkbox {
-    margin-left: 0.25em;
+    margin-left: 1.25em !important;
 }
 
 .column-margin {
