@@ -1,7 +1,3 @@
-div.entry-card.affixoid .bg-secondary {
-    background-color: #969082 !important; 
-}
-
 div.entry-card.affixoid .definition-region {
     display: flex;
     flex-wrap: wrap;
@@ -28,7 +24,7 @@ div.entry-card.affixoid .vocabulum-badge-link:hover, div.entry-card.affixoid .vo
     background-color: #dae0e5;
 }
 
-div.entry-card.affixoid .badge-secondary {
-    background-color: #969082 !important;
-    color: white !important; 
+.accordion-button-bg-color {
+    background-color: rgba(var(--bs-body-color-rgb), 0.03) !important;
+    height: 36px !important;
 }

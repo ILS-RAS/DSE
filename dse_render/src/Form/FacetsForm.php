@@ -29,7 +29,6 @@ class FacetsForm extends FormBase {
             $active_list = $session -> get('dse_render.active_list');
         }
 
-
         $form['facets'] = array(
             '#type' => 'container',
             '#prefix' => '<div id=facets>',
@@ -47,6 +46,12 @@ class FacetsForm extends FormBase {
             $_id = $record -> _id;
             $url = explode('/api', $record -> update_view_url)[0];
 
+            $voc_count = $conn -> select('dse_render_vocables', 'd')
+            -> condition('d.source_id', $_id)
+            -> countQuery()
+            -> execute()
+            -> fetchField();
+
             $form['facets']['datasources'][$_id] = array(
                 '#type' => 'container',
                 '#tree' => TRUE,
@@ -54,7 +59,7 @@ class FacetsForm extends FormBase {
                     'class' => [
                         'd-inline-flex',
                         'justify-content-between',
-                        'align-items-baseline',
+                        'align-items-center',
                         'column-margin'
                     ]
                 ]
@@ -80,6 +85,13 @@ class FacetsForm extends FormBase {
                     'disable-refocus' => TRUE,
                 ]
             );
+
+            $form['facets']['datasources'][$_id]['count'] = array(
+                '#prefix' => '<div class="ms-2 fw-bold text-end">',
+                '#type' => 'item',
+                '#title' => $voc_count . ' вокабул',
+                '#suffix' => '</div>'
+            );
           }
 
         return $form;
@@ -93,14 +105,10 @@ class FacetsForm extends FormBase {
     }
 
     public function setDatasources(array &$form, FormStateInterface $form_state) {
-        $stringa = ''; 
-
         $session = \Drupal::request() -> getSession();
 
         $triggering_elt = $form_state -> getTriggeringElement();
         $_id = $triggering_elt['#array_parents'][2];
-
-        $stringa .= $_id;
 
         $enabled = $form_state -> getValues()['datasources'][$_id]['enabled'];
         $active_list = $session -> get('dse_render.active_list'); 

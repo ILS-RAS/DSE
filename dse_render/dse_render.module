@@ -12,6 +12,7 @@ function dse_render_theme($existing, $type, $theme, $path) {
     'search_facets' => [
       'variables' => [
         'facets' => NULL,
+        'overall_count' => NULL
         ]
       ],
     'search_icon' => [
