@@ -21,7 +21,7 @@
                             <div id={{"collapse#{id}"}} class="accordion-collapse collapse show" aria-labelledby={{"heading#{id}"}}>
                                 <div class="accordion-body output d-flex flex-column">
                                     {% set style = objects.style %}
-                                        <div class='d-flex'> 
+                                        <div class='d-flex flex-wrap'> 
                                         {% for record in objects.responses %}
                                             <div>                                   
                                                 <span id={{record._id}} class="dse-found-item btn btn-outline-secondary me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Открыть статью"> 
