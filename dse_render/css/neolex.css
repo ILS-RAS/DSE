@@ -2,8 +2,8 @@ div.neolex .field-flexions {
     font-size: 80%;
 }
 
-div.neolex .card-header.bg-primary  {
-    background-color: var(--bs-secondary-rgb) !important;
+div.neolex .card-header  {
+    background-color: rgba(var(--bs-secondary-rgb), 1) !important;
 }
 
 div.neolex .grammar-mark {

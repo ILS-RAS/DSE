@@ -4,7 +4,7 @@ div.entry-card.bibliolex details {
 }
 
 div.entry-card.bibliolex .card-header{
-    background-color: var(--bs-secondary-rgb) !important;
+    background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity)) !important;
 }
 
 div.entry-card.bibliolex summary {
@@ -80,4 +80,8 @@ div.entry-card.bibliolex .quote-value>p {
 
 div.entry-card.bibliolex  .relation-link {
     color: white !important;
+}
+
+div.entry-card.bibliolex span.badge-primary.bg-primary {
+    background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity)) !important;
 }
