@@ -3,8 +3,8 @@ div.entry-card.bibliolex details {
     border: 0px !important;
 }
 
-div.entry-card.bibliolex .card-header {
-    background-color: var(--bs-secondary-rgb);
+div.entry-card.bibliolex .card-header{
+    background-color: var(--bs-secondary-rgb) !important;
 }
 
 div.entry-card.bibliolex summary {
