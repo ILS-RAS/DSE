@@ -18,7 +18,8 @@ function dse_render_theme($existing, $type, $theme, $path) {
     'search_icon' => [
       'variables' => [
         'datasource_url' => NULL,
-        'datasource_name' => NULL
+        'datasource_name' => NULL,
+        'voc_count' => NULL
       ]
     ],
     'search_output' => [

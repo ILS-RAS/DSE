@@ -70,6 +70,7 @@ class FacetsForm extends FormBase {
                 '#theme' => 'search_icon',
                 '#datasource_url' => $url,
                 '#datasource_name' => $record -> full_name,
+                '#voc_count' => $voc_count
             );
         
             $form['facets']['datasources'][$_id]['enabled'] = array(
@@ -84,13 +85,6 @@ class FacetsForm extends FormBase {
                     ],
                     'disable-refocus' => TRUE,
                 ]
-            );
-
-            $form['facets']['datasources'][$_id]['count'] = array(
-                '#prefix' => '<div class="ms-2 fw-bold text-end">',
-                '#type' => 'item',
-                '#title' => $voc_count . ' вокабул',
-                '#suffix' => '</div>'
             );
           }
 
