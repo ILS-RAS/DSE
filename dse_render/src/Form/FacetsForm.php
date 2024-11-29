@@ -100,6 +100,7 @@ class FacetsForm extends FormBase {
 
     public function setDatasources(array &$form, FormStateInterface $form_state) {
         $session = \Drupal::request() -> getSession();
+        $conn = \Drupal::database();
 
         $triggering_elt = $form_state -> getTriggeringElement();
         $_id = $triggering_elt['#array_parents'][2];
@@ -111,6 +112,10 @@ class FacetsForm extends FormBase {
             $active_list[$_id] = 0;
         } else {
             $active_list[$_id] = 1;
+        }
+
+        foreach (array_keys($active_list, 1) as $id) {
+            
         }
 
         $session -> set('dse_render.active_list', $active_list);

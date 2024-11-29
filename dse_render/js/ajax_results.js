@@ -1,5 +1,5 @@
 (function ($, Drupal, once) {
-    let bootstrap4_conversion = {
+    const bootstrap4_conversion = {
         'data-toggle': 'data-bs-toggle',
         'data-placement': 'data-bs-placement',
         'data-content': 'data-bs-content',
@@ -20,7 +20,7 @@
     }
 
     function displayError(selector, style) {
-        let errMessage = $('<div></div>').text("Что-то пошло не так. Повторите попытку загрузки позже.").addClass("ajax-render mt-3").addClass(style);
+        let errMessage = $('<div></div>').text("Что-то пошло не так. Повторите попытку загрузки позже.").addClass("alert alert-danger ajax-render mt-3").addClass(style);
 
         $(selector).replaceWith(errMessage);
     }
@@ -49,16 +49,31 @@
                                     dataType: "json",
                                 })
                                 .done( function( json ) {
-                                    if (json[0].render) {
+                                    if (json !== undefined && json[0].render) {
                                         let result = $(json[0].render).addClass("ajax-render mt-3").addClass(val.style);
-
-                                        let baseLink = val.ajax_url.split('/api')[0];
-
                                         $(result).find('a').each(function() {
                                             let relLink = $(this).attr('href');
                                             if (relLink !== undefined && !(relLink.startsWith('http'))) {
-                                                $(this).attr('href', baseLink + relLink);
-                                                $(result).find('a').attr('target', '_blank');
+                                                $(this).attr('href', baseLink + relLink)
+                                                let id = relLink.split('node/')[1]
+                                                $(this).on('click', function(event) {
+                                                    event.preventDefault();
+                                                    $.ajax({
+                                                        url: val.ajax_url,
+                                                        data: {
+                                                            nid: id
+                                                        },
+                                                        type: 'GET',
+                                                        dataType: 'json',
+                                                    })
+                                                    .done( function(modal_json) {
+                                                        let newDialog = $(modal_json[0].render);
+                                                        console.log(newDialog);
+                                                        Drupal.dialog(newDialog, {
+                                                            width: 800,
+                                                        }).showModal();                       
+                                                    })
+                                                })
                                             }                                       
                                         })
                                         
@@ -68,6 +83,7 @@
                                         $(search_styles).replaceWith(result);
 
                                         $('[data-bs-toggle="popover"]').popover();
+                                        $('[data-bs-toggle="tooltip"]').tooltip();
                                        
                                     } else {
                                         displayError(search_styles, val.style);
