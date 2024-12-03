@@ -84,8 +84,9 @@ div.bibliolex .quote-value>p {
 }
 
 div.bibliolex  .relation-link {
-    color: black !important;
+    color: var(--bs-link-color) !important;
     text-decoration: underline !important;
+    color: var(--bs-link-hover-color) !important;
 }
 
 div.bibliolex span.badge-primary.bg-primary {
