@@ -10,9 +10,12 @@ div.neolex .field-flexions {
     font-size: 80%;
 }
 
-div.neolex .card-header.text-white  {
+div.neolex .card-header  {
     background-color: #f8f8f8 !important;
-    color: black !important;
+}
+
+div.neolex .text-white {
+    color: black !important
 }
 
 div.neolex .card-header .card-title {
@@ -86,4 +89,8 @@ div.neolex .headword-type-42, .headword-type-506 {
 div.neolex summary.sub-entry-title {
     color: black; 
     opacity: 0.8;
+}
+
+div.neolex .card-header {
+    height: 42px;
 }

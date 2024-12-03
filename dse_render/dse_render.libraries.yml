@@ -5,7 +5,7 @@ search_block:
       css/search_block.css: {}
 
 ajax_results:
-  version: 1.2.6
+  version: 1.2.10
   js:
     js/ajax_results.js: {}
   dependencies:
@@ -32,7 +32,7 @@ autocomplete_override:
     - core/once
 
 style_responses:
-  version: 1.2.10
+  version: 1.2.12
   css:
     theme:
       css/affixoid.css: {}

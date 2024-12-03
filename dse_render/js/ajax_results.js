@@ -34,12 +34,14 @@
     function modalizeLinks(result, baseLink, ajax_url, style) {
         $(result).find('a').each(function() {
             let relLink = $(this).attr('href');
+
             if (relLink !== undefined && !(relLink.startsWith('http'))) {
                 $(this).attr('href', baseLink + relLink)
                 let id = relLink.split('node/')[1]
                 if (id) {
                     $(this).on('click', function(event) {
                         event.preventDefault();
+
                         $.ajax({
                             url: ajax_url,
                             data: {
@@ -50,6 +52,7 @@
                         })
                         .done( function(modal_json) {                   
                             let newDialog = wrapJson(modal_json[0].render, style);
+
                             convertTags(newDialog, 'a');
                             convertTags(newDialog, 'span');
                             modalizeLinks(newDialog, baseLink, ajax_url, style);
@@ -60,9 +63,6 @@
                                 title: 'Справочная информация',
                                 width: 800,
                                 dialogClass: 'dse-modal',
-                                close: function(event) {
-                                    $(event.target).remove();
-                                }
                             }).showModal();
                             
                             $('[data-bs-toggle="popover"]').popover();

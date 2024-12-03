@@ -2,10 +2,14 @@ div.affixoid .bg-secondary {
    background-color: #f8f8f8 !important;
 }
 
-div.affixoid .card-header.text-white {
-    color: black !important;
+div.affixoid .text-white {
+    color: black !important
 }
 
+
+div.affixoid .card-header {
+    height: 42px;
+}
 
 div.affixoid .card-header .card-title {
     font-weight: normal;

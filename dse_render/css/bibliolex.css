@@ -100,3 +100,11 @@ div.bibliolex a {
 div.bibliolex a:hover {
     color: var(--bs-link-hover-color) !important;
 }
+
+div.bibliolex .text-white {
+    color: black !important
+}
+
+div.bibliolex .card-header {
+    height: 42px;
+}
