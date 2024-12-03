@@ -6,13 +6,18 @@ div.affixoid .card-header.text-white {
     color: black !important;
 }
 
+
+div.affixoid .card-header .card-title {
+    font-weight: normal;
+}
+
 div.affixoid .definition-region {
     display: flex;
     flex-wrap: wrap;
 }
 
 div.affixoid .definition {
-        font-weight: 600;
+    font-weight: 600;
 }
 
 div.affixoid .vocabulum-example-region > .badge {
@@ -30,6 +35,14 @@ div.affixoid .vocabulum-badge-link {
 div.affixoid .vocabulum-badge-link:hover, div.affixoid .vocabulum-badge-link:focus {
     color: #212529;
     background-color: #dae0e5;
+}
+
+div.affixoid a {
+    color: var(--bs-link-color) !important;
+}
+
+div.affixoid a:hover {
+    color: var(--bs-link-hover-color) !important;
 }
 
 .accordion-button-bg-color {

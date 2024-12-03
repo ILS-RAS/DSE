@@ -48,16 +48,25 @@
                             type: 'GET',
                             dataType: 'json',
                         })
-                        .done( function(modal_json) {
+                        .done( function(modal_json) {                   
                             let newDialog = wrapJson(modal_json[0].render, style);
+                            convertTags(newDialog, 'a');
+                            convertTags(newDialog, 'span');
                             modalizeLinks(newDialog, baseLink, ajax_url, style);
                             if ($(".dse-modal").length ) {
                                 $(".dse-modal").remove();
                             }
                             Drupal.dialog(newDialog, {
+                                title: 'Справочная информация',
                                 width: 800,
-                                dialogClass: 'dse-modal'
-                            }).showModal();                       
+                                dialogClass: 'dse-modal',
+                                close: function(event) {
+                                    $(event.target).remove();
+                                }
+                            }).showModal();
+                            
+                            $('[data-bs-toggle="popover"]').popover();
+                            $('[data-bs-toggle="tooltip"]').tooltip();
                         })
                     })
                 }
@@ -100,10 +109,9 @@
                                         convertTags(result, 'span');
  
                                         $(search_styles).replaceWith(result);
-
+                                        
                                         $('[data-bs-toggle="popover"]').popover();
                                         $('[data-bs-toggle="tooltip"]').tooltip();
-                                       
                                     } else {
                                         displayError(search_styles, val.style);
                                     }

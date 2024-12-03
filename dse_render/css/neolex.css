@@ -1,3 +1,11 @@
+div.neolex a {
+    color: var(--bs-link-color) !important;
+}
+
+div.neolex a:hover {
+    color: var(--bs-link-hover-color) !important;
+}
+
 div.neolex .field-flexions {
     font-size: 80%;
 }
@@ -5,6 +13,10 @@ div.neolex .field-flexions {
 div.neolex .card-header.text-white  {
     background-color: #f8f8f8 !important;
     color: black !important;
+}
+
+div.neolex .card-header .card-title {
+    font-weight: normal;
 }
 
 div.neolex .grammar-mark {
@@ -62,7 +74,7 @@ div.neolex .card-footer {
     height: 1.8rem !important;
     padding-top: 1px !important;
     padding-right: 10px !important;
-    color: #537072 !important;
+    color: black 
 }
 
 div.neolex .headword-type-42, .headword-type-506 {
@@ -72,6 +84,6 @@ div.neolex .headword-type-42, .headword-type-506 {
 }
 
 div.neolex summary.sub-entry-title {
-    background-color: #537072 !important;
+    color: black; 
     opacity: 0.8;
 }

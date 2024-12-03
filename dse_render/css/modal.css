@@ -1,0 +1,11 @@
+.dse-modal.ui-dialog .ui-dialog-titlebar {
+    background: #f8f8f8 !important;
+}
+
+.tooltip {
+    z-index: 100000;
+}
+
+.popover {
+    z-index: 100000;
+}

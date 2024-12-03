@@ -8,6 +8,10 @@ div.bibliolex .card-header.bg-primary.text-white{
     color: black !important;
 }
 
+div.bibliolex .card-header .card-title {
+    font-weight: normal;
+}
+
 div.bibliolex summary {
     display: list-item;
     cursor: pointer;
@@ -80,9 +84,18 @@ div.bibliolex .quote-value>p {
 }
 
 div.bibliolex  .relation-link {
-    color: white !important;
+    color: black !important;
+    text-decoration: underline !important;
 }
 
 div.bibliolex span.badge-primary.bg-primary {
-    background-color: rgba(#f8f8f8, 1) !important;
+    background-color: #f8f8f8 !important;
+}
+
+div.bibliolex a {
+    color: var(--bs-link-color) !important;
+}
+
+div.bibliolex a:hover {
+    color: var(--bs-link-hover-color) !important;
 }
