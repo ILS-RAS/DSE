@@ -5,7 +5,7 @@ search_block:
       css/search_block.css: {}
 
 ajax_results:
-  version: 1.2.4
+  version: 1.2.6
   js:
     js/ajax_results.js: {}
   dependencies:
