@@ -32,7 +32,7 @@ autocomplete_override:
     - core/once
 
 style_responses:
-  version: 1.1.2
+  version: 1.2
   css:
     theme:
       css/affixoid.css: {}

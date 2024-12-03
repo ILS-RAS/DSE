@@ -3,8 +3,9 @@ div.bibliolex details {
     border: 0px !important;
 }
 
-div.bibliolex .card-header{
-    background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity)) !important;
+div.bibliolex .card-header.bg-primary.text-white{
+    background-color: #f8f8f8 !important;
+    color: black !important;
 }
 
 div.bibliolex summary {
@@ -51,13 +52,13 @@ div.bibliolex .card-footer {
 div.bibliolex .entry-changed-date {
     float: right;
     opacity: 0.6;
-    color: #4D648D;
+    color: black;
     font-size: 90%;
 }
 
 div.bibliolex .source-info-symbol {
     font-size: 100% !important;
-    color: #283655;
+    color: black;
     opacity: 0.9;
 }
 
@@ -66,11 +67,11 @@ div.bibliolex a {
 }
 
 div.bibliolex .quote-pages {
-    color: #4D648D !important;
+    color: black !important;
 }
 
 div.bibliolex .period {
-    color: #4D648D !important;
+    color: black !important;
     font-weight: 700;
 }
 
@@ -83,5 +84,5 @@ div.bibliolex  .relation-link {
 }
 
 div.bibliolex span.badge-primary.bg-primary {
-    background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity)) !important;
+    background-color: rgba(#f8f8f8, 1) !important;
 }
