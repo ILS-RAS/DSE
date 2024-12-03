@@ -7,7 +7,7 @@ div.fieldset-wrapper {
     padding-right: 1.6em !important;
 }
 
-div#edit-facets legend {
+div.js-form-wrapper legend {
     display: none;
 }
 
@@ -26,4 +26,9 @@ div#edit-facets legend {
 
 div.ajax-progress-throbber {
     z-index: 10000;
+}
+
+div.card-footer div.js-form-item-footer {
+    margin-top: auto !important;
+    margin-bottom: auto !important;
 }

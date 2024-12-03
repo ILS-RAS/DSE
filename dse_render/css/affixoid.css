@@ -1,25 +1,25 @@
-div.entry-card.affixoid .definition-region {
+div.affixoid .definition-region {
     display: flex;
     flex-wrap: wrap;
 }
 
-div.entry-card.affixoid .definition {
+div.affixoid .definition {
         font-weight: 600;
 }
 
-div.entry-card.affixoid .vocabulum-example-region > .badge {
+div.affixoid .vocabulum-example-region > .badge {
     font-weight: 400;
 }
 
-div.entry-card.affixoid .badge-light {
+div.affixoid .badge-light {
     background-color: #f8f9fa !important;
 }
 
-div.entry-card.affixoid .vocabulum-badge-link {
+div.affixoid .vocabulum-badge-link {
     color: #0056b3;
 }
 
-div.entry-card.affixoid .vocabulum-badge-link:hover, div.entry-card.affixoid .vocabulum-badge-link:focus {
+div.affixoid .vocabulum-badge-link:hover, div.affixoid .vocabulum-badge-link:focus {
     color: #212529;
     background-color: #dae0e5;
 }

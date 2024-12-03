@@ -25,6 +25,47 @@
         $(selector).replaceWith(errMessage);
     }
 
+    function wrapJson(json, style) {
+        let container = $('<div class="ajax-render mt-3"> </div>').addClass(style);
+
+        return $(container).prepend($(json));
+    }
+
+    function modalizeLinks(result, baseLink, ajax_url, style) {
+        $(result).find('a').each(function() {
+            let relLink = $(this).attr('href');
+            if (relLink !== undefined && !(relLink.startsWith('http'))) {
+                $(this).attr('href', baseLink + relLink)
+                let id = relLink.split('node/')[1]
+                if (id) {
+                    $(this).on('click', function(event) {
+                        event.preventDefault();
+                        $.ajax({
+                            url: ajax_url,
+                            data: {
+                                nid: id
+                            },
+                            type: 'GET',
+                            dataType: 'json',
+                        })
+                        .done( function(modal_json) {
+                            let newDialog = wrapJson(modal_json[0].render, style);
+                            modalizeLinks(newDialog, baseLink, ajax_url, style);
+                            if ($(".dse-modal").length ) {
+                                $(".dse-modal").remove();
+                            }
+                            Drupal.dialog(newDialog, {
+                                width: 800,
+                                dialogClass: 'dse-modal'
+                            }).showModal();                       
+                        })
+                    })
+                }
+            }                                       
+        })
+    }
+    
+
     Drupal.behaviors.resultsDisplay = {
         attach: (context, settings) => {
             once('resultsDisplay', '.dse-found-item').forEach(function (elt) {
@@ -50,33 +91,11 @@
                                 })
                                 .done( function( json ) {
                                     if (json !== undefined && json[0].render) {
-                                        let result = $(json[0].render).addClass("ajax-render mt-3").addClass(val.style);
-                                        $(result).find('a').each(function() {
-                                            let relLink = $(this).attr('href');
-                                            if (relLink !== undefined && !(relLink.startsWith('http'))) {
-                                                $(this).attr('href', baseLink + relLink)
-                                                let id = relLink.split('node/')[1]
-                                                $(this).on('click', function(event) {
-                                                    event.preventDefault();
-                                                    $.ajax({
-                                                        url: val.ajax_url,
-                                                        data: {
-                                                            nid: id
-                                                        },
-                                                        type: 'GET',
-                                                        dataType: 'json',
-                                                    })
-                                                    .done( function(modal_json) {
-                                                        let newDialog = $(modal_json[0].render);
-                                                        console.log(newDialog);
-                                                        Drupal.dialog(newDialog, {
-                                                            width: 800,
-                                                        }).showModal();                       
-                                                    })
-                                                })
-                                            }                                       
-                                        })
-                                        
+                                        let result = wrapJson(json[0].render, val.style);
+                                        let baseLink = val.ajax_url.split('/api')[0]; 
+                              
+                                        modalizeLinks(result, baseLink, val.ajax_url, val.style);
+
                                         convertTags(result, 'a');
                                         convertTags(result, 'span');
  

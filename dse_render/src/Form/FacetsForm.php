@@ -8,6 +8,26 @@ use Drupal\Core\Url;
 
 class FacetsForm extends FormBase {
 
+    private function getWordCount(): int {
+        $count = 0;
+
+        $session = \Drupal::request() -> getSession();
+        $active_list = $session -> get('dse_render.active_list');
+
+        $conn = $conn = \Drupal::database();
+        foreach (array_keys($active_list, 1) as $_id) {
+            $local_count = $conn -> select('dse_render_vocables', 'v')
+            -> condition('v.source_id', $_id) 
+            -> countQuery()
+            -> execute()
+            -> fetchField();
+
+            $count += $local_count;
+        }
+
+        return $count;
+    }
+
     public function getFormId() {
         return 'dse_render_facets_form';
     }
@@ -39,6 +59,8 @@ class FacetsForm extends FormBase {
         $form['facets']['datasources'] = array(
             '#type' => 'fieldset',
             '#tree' => TRUE,
+            '#prefix' => '<div class="card-body">',
+            '#suffix' => '</div>'
         );
         
         
@@ -88,6 +110,14 @@ class FacetsForm extends FormBase {
             );
           }
 
+          $count = $this -> getWordCount();
+          $form['facets']['footer'] = array(
+            '#type' => 'item',
+            '#title' => 'Всего доступных вокабул: ' . $count,
+            '#prefix' =>  '<div class="card-footer text-secondary">',
+            '#suffix' => '</div>'
+          );
+
         return $form;
     }
 
@@ -103,22 +133,21 @@ class FacetsForm extends FormBase {
         $conn = \Drupal::database();
 
         $triggering_elt = $form_state -> getTriggeringElement();
-        $_id = $triggering_elt['#array_parents'][2];
+        $trigger_id = $triggering_elt['#array_parents'][2];
 
-        $enabled = $form_state -> getValues()['datasources'][$_id]['enabled'];
+        $enabled = $form_state -> getValues()['datasources'][$trigger_id]['enabled'];
         $active_list = $session -> get('dse_render.active_list'); 
 
         if (!$enabled) {
-            $active_list[$_id] = 0;
+            $active_list[$trigger_id] = 0;
         } else {
-            $active_list[$_id] = 1;
-        }
-
-        foreach (array_keys($active_list, 1) as $id) {
-            
+            $active_list[$trigger_id] = 1;
         }
 
         $session -> set('dse_render.active_list', $active_list);
+
+        $count = $this -> getWordCount();
+        $form['facets']['footer']['#title'] = 'Всего доступных вокабул: ' . $count;  
         
         return $form['facets'];
     }

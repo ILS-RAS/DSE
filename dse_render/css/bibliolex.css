@@ -1,87 +1,87 @@
-div.entry-card.bibliolex details {
+div.bibliolex details {
     margin: 0px !important;
     border: 0px !important;
 }
 
-div.entry-card.bibliolex .card-header{
+div.bibliolex .card-header{
     background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity)) !important;
 }
 
-div.entry-card.bibliolex summary {
+div.bibliolex summary {
     display: list-item;
     cursor: pointer;
 }
 
-div.entry-card.bibliolex a.badge.text-primary{
+div.bibliolex a.badge.text-primary{
     color: #dc3545 !important;
 
 }
 
-div.entry-card.bibliolex .quote {
+div.bibliolex .quote {
     flex-grow: 1;
     font-size: 14px;
     text-align: justify;
 }
 
-div.entry-card.bibliolex .pl-2 {
+div.bibliolex .pl-2 {
     padding-left: 0.5rem;
 }
 
-div.entry-card.bibliolex .pr-2 {
+div.bibliolex .pr-2 {
     padding-left: 0.25rem;
 }
 
-div.entry-card.bibliolex .ml-3 {
+div.bibliolex .ml-3 {
     margin-left: 1rem;
 }
 
-div.entry-card.bibliolex .ml-2, .mx-2 {
+div.bibliolex .ml-2, .mx-2 {
     margin-left: 0.5rem !important;
 }
 
-div.entry-card.bibliolex .badge-tooltip {
+div.bibliolex .badge-tooltip {
     cursor: help;
 }
 
-div.entry-card.bibliolex .card-footer {
+div.bibliolex .card-footer {
     height: 2rem !important;
     padding-top: 6px !important;
 }
 
-div.entry-card.bibliolex .entry-changed-date {
+div.bibliolex .entry-changed-date {
     float: right;
     opacity: 0.6;
     color: #4D648D;
     font-size: 90%;
 }
 
-div.entry-card.bibliolex .source-info-symbol {
+div.bibliolex .source-info-symbol {
     font-size: 100% !important;
     color: #283655;
     opacity: 0.9;
 }
 
-div.entry-card.bibliolex a {
+div.bibliolex a {
     text-decoration: none !important;
 }
 
-div.entry-card.bibliolex .quote-pages {
+div.bibliolex .quote-pages {
     color: #4D648D !important;
 }
 
-div.entry-card.bibliolex .period {
+div.bibliolex .period {
     color: #4D648D !important;
     font-weight: 700;
 }
 
-div.entry-card.bibliolex .quote-value>p {
+div.bibliolex .quote-value>p {
     display: contents !important;
 }
 
-div.entry-card.bibliolex  .relation-link {
+div.bibliolex  .relation-link {
     color: white !important;
 }
 
-div.entry-card.bibliolex span.badge-primary.bg-primary {
+div.bibliolex span.badge-primary.bg-primary {
     background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity)) !important;
 }

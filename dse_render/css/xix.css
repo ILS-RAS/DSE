@@ -1,36 +1,36 @@
-div.xix.card .headword {
+div.xix .card .headword {
     text-transform: uppercase;
     font-weight: 600;
     font-family: auto;
 }
 
-div.xix.card .quote-text > p {
+div.xix .card .quote-text > p {
     display: inline !important;
 }
 
-div.xix.card .quote-text > p > code {
+div.xix .card .quote-text > p > code {
     text-decoration: underline;
     color: unset;
     font-family: inherit !important;
     font-size: initial !important;
 }
 
-div.xix.card .source-code, .source-code-years, .dates, .quote-address {
+div.xix .card .source-code, .source-code-years, .dates, .quote-address {
     font-size: 85%;
     font-weight: 400;
 }
 
-div.xix.card .collocation-attributes > .vocable {
+div.xix .card .collocation-attributes > .vocable {
     letter-spacing: 3px;
     font-weight: 600;
 }
 
-div.xix.card .collocation-symbol {
+div.xix .card .collocation-symbol {
     font-size: initial;
     cursor: help;
 }
 
-div.xix.card .free-collocation-symbol, .grammar-mark, .dynamic-mark, .language-mark, .stylistic-mark, 
+div.xix .card .free-collocation-symbol, .grammar-mark, .dynamic-mark, .language-mark, .stylistic-mark, 
 .semantic-mark, .functional-mark, .frequency-mark, .expressive-mark, .context-mark, .change-mark, .reference-type {
     cursor: help;
 }

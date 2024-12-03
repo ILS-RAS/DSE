@@ -5,7 +5,7 @@ search_block:
       css/search_block.css: {}
 
 ajax_results:
-  version: 1.1.18
+  version: 1.2.0
   js:
     js/ajax_results.js: {}
   dependencies:
@@ -15,9 +15,9 @@ ajax_results:
     - core/drupalSettings
     - core/drupal.dialog
     - core/drupal.dialog.ajax
-  
+
 search_facets:
-  version: 1.0
+  version: 1.1.2
   css:
     base:
       css/facets.css: {}
@@ -32,7 +32,7 @@ autocomplete_override:
     - core/once
 
 style_responses:
-  version: 1.0
+  version: 1.1.2
   css:
     theme:
       css/affixoid.css: {}

@@ -18,13 +18,13 @@ use Drupal\Core\Block\BlockBase;
     public function build() {
         $form = \Drupal::formBuilder() -> getForm('Drupal\dse_render\Form\FacetsForm');
 
-        $conn = \Drupal::database();
-        $count = $conn -> select('dse_render_vocables', 'd') -> countQuery() -> execute() -> fetchField();
+        // $conn = \Drupal::database();
+        // $count = $conn -> select('dse_render_vocables', 'd') -> countQuery() -> execute() -> fetchField();
 
         return array(
             '#theme' => 'search_facets',
             '#facets' => $form,
-            '#overall_count' => $count,
+            // '#overall_count' => $count,
         );
     }
 
