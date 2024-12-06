@@ -2,6 +2,11 @@
     background: #f8f8f8 !important;
 }
 
+
+.no-close .ui-dialog-titlebar-close {
+    display: none;
+  }
+
 .tooltip {
     z-index: 100000;
 }

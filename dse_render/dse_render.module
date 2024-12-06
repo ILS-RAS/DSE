@@ -12,7 +12,6 @@ function dse_render_theme($existing, $type, $theme, $path) {
     'search_facets' => [
       'variables' => [
         'facets' => NULL,
-        // 'overall_count' => NULL
         ]
       ],
     'search_icon' => [
@@ -36,39 +35,41 @@ function dse_render_theme($existing, $type, $theme, $path) {
  */
 
 function dse_render_form_alter(&$form, &$form_state, $form_id) {
-    if ($form_id == 'dse_render_settings') {
-        $form['actions']['submit']['#type'] = 'hidden';
+  if ($form_id == 'dse_render_settings') {
 
-        $conn = \Drupal::database();
-        $query = $conn -> select('dse_render_datasources', 'd') -> condition('initialized', 1) -> fields('d', ['_id']);
-        $datasources = $query -> execute() -> fetchAll(); 
-  
+    $form['actions']['submit']['#type'] = 'hidden';
 
-        foreach ($datasources as $source) {
-            $_id = $source -> _id;
+    $conn = \Drupal::database();
+    $query = $conn -> select('dse_render_datasources', 'd') -> condition('initialized', 1) -> fields('d', ['_id', 'update_view_url', 'full_name']);
+    $datasources = $query -> execute() -> fetchAll(); 
 
-            $query = $conn -> select('dse_render_vocables', 'v')
-            -> condition('v.source_id', $_id)
-            -> countQuery();
+    foreach ($datasources as $source) {
+      $_id = $source -> _id;
+
+      $query = $conn -> select('dse_render_vocables', 'v')
+        -> condition('v.source_id', $_id)
+        -> countQuery();
             
-            $count = $query -> execute() -> fetchField();
+      $count = $query -> execute() -> fetchField();
 
-            $form['datasources'][$_id]['initialize']['#type'] = 'item';
-            $form['datasources'][$_id]['initialize']['#title'] = $count . ' записей';
-        }
-    }
+      $form['datasources'][$_id]['initialize']['#type'] = 'item';
+      $form['datasources'][$_id]['initialize']['#title'] = $count . ' записей';
 
-    if ($form_id == 'dse_render_search_form') {
-      $form['#attached']['library'][] = 'dse_render/autocomplete_override';
-      $form['#attached']['library'][] = 'dse_render/search_block';
+      $form['datasources'][$_id]['reload']['#type'] = 'submit';
     }
   }
+
+  if ($form_id == 'dse_render_search_form') {
+    $form['#attached']['library'][] = 'dse_render/autocomplete_override';
+    $form['#attached']['library'][] = 'dse_render/search_block';
+  }
+}
 
 /**
  * Implements hook_cron().
  */
 
-  function dse_render_cron() {
+function dse_render_cron() {
 
     $conn = \Drupal::database();
 
@@ -110,4 +111,4 @@ function dse_render_form_alter(&$form, &$form_state, $form_id) {
             }
         }
     }
-   }
+}
